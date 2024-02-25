@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["./assets/css/tailwind.css"],
-  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content"]
+  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content"],
+  content: {
+    highlight: {
+      theme: 'nord',
+    }
+  },
 
 })
