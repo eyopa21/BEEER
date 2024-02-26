@@ -24,18 +24,18 @@ const isDark = computed({
             </div>
             <ul class="items-center ring-1 ring-primary dark:ring-primary px-3 gap-x-0 rounded-full hidden lg:flex">
                 <li class="relative">
-                    <NuxtLink to="/feeds"
-                        class="text-sm/6 flex items-center gap-1 py-2 px-4 font-medium transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <NuxtLink to="/feeds" active-class="border-b-[2px] border-primary text-primary font-semibold"
+                        class="text-sm/6 flex items-center gap-1 py-2 px-4  transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         Feeds</NuxtLink>
                 </li>
                 <li class="relative">
-                    <NuxtLink to="/writers"
-                        class="text-sm/6 flex items-center gap-1 py-2 px-4 font-medium transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <NuxtLink to="/writers" active-class="border-b-[2px] border-primary text-primary font-semibold"
+                        class="text-sm/6 flex items-center gap-1 py-2 px-4  transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         Writers</NuxtLink>
                 </li>
                 <li class="relative">
-                    <NuxtLink
-                        class="text-sm/6 flex items-center gap-1 py-2 px-4 font-medium transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <NuxtLink to="/#faqs" active-class="border-b-[2px] border-primary text-primary font-semibold"
+                        class="text-sm/6 flex items-center gap-1 py-2 px-4 transition-colors relative after:absolute after:-bottom-px after:inset-x-2 after:h-px after:rounded-full after:opacity-0 after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         FAQs</NuxtLink>
                 </li>
                 <li class="relative">

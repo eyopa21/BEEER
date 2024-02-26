@@ -15,4 +15,23 @@ export default defineNuxtConfig({
       isCustomElement: (tag) => ["hyvor-talk-comments"].includes(tag),
     },
   },
+  app: {
+    pageTransition: { name: 'slide-fade' },
+    head: {
+      meta: [
+      ],
+
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png'
+        }
+
+      ],
+      noscript: [
+        { children: 'JavaScript is required' }
+      ]
+    }
+  },
 })

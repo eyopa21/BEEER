@@ -1,28 +1,33 @@
+<script setup>
+
+const page = ref(1)
+
+</script>
+
+
 <template>
     <div>
 
-        <div class=" bg-gray-100">
+        <div class=" bg-gray-100 dark:bg-black">
 
             <div class="px-6 py-8">
                 <div class="container flex justify-between mx-auto">
                     <div class="w-full lg:w-8/12">
                         <div class="flex items-center justify-between">
-                            <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Post</h1>
+                            <h1 class="text-xl font-bold text-gray-700 dark:text-gray-200 md:text-2xl">Post</h1>
                             <div>
-                                <select
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    <option>Latest</option>
-                                    <option>Last Week</option>
-                                </select>
+                                <VUEFilter />
                             </div>
                         </div>
                         <div v-for="i in 5" :key="i" class="mt-6">
-                            <div class="max-w-4xl px-10 py-6 mx-auto bg-white rounded-lg shadow-md">
+                            <div
+                                class="max-w-4xl px-10 py-6 mx-auto bg-white dark:bg-black rounded-3xl shadow-sm dark:shadow-none dark:border dark:border-gray-900 border-primary shadow-primary">
                                 <div class="flex items-center justify-between"><span class="font-light text-gray-600">Jun 1,
                                         2020</span><a href="#"
-                                        class="px-2 py-1 font-bold text-gray-100 bg-gray-600 rounded hover:bg-gray-500">Laravel</a>
+                                        class="px-2 py-1 text-xs font-bold text-gray-100 bg-primary dark:bg-primary-800 rounded-lg">Laravel</a>
                                 </div>
-                                <div class="mt-2"><a href="#" class="text-2xl font-bold text-gray-700 hover:underline">Build
+                                <div class="mt-2"><a href="#"
+                                        class="text-2xl font-bold text-gray-700 dark:text-gray-300 hover:underline">Build
                                         Your New Idea with Laravel Freamwork.</a>
                                     <p class="mt-2 text-gray-600">Lorem ipsum dolor sit, amet consectetur adipisicing
                                         elit.
@@ -37,49 +42,38 @@
                                                 src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
                                                 alt="avatar"
                                                 class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block">
-                                            <h1 class="font-bold text-gray-700 hover:underline">Alex John</h1>
+                                            <NuxtLink to="/account/profile-2"
+                                                class="font-bold text-gray-700 hover:underline">Eyob Nigussie</NuxtLink>
                                         </a></div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-8">
-                            <div class="flex">
-                                <a href="#"
-                                    class="px-3 py-2 mx-1 font-medium text-gray-500 bg-white rounded-md cursor-not-allowed">
-                                    previous
-                                </a>
-
-                                <a href="#"
-                                    class="px-3 py-2 mx-1 font-medium text-gray-700 bg-white rounded-md hover:bg-blue-500 hover:text-white">
-                                    1
-                                </a>
-
-                                <a href="#"
-                                    class="px-3 py-2 mx-1 font-medium text-gray-700 bg-white rounded-md hover:bg-blue-500 hover:text-white">
-                                    2
-                                </a>
-
-                                <a href="#"
-                                    class="px-3 py-2 mx-1 font-medium text-gray-700 bg-white rounded-md hover:bg-blue-500 hover:text-white">
-                                    3
-                                </a>
-
-                                <a href="#"
-                                    class="px-3 py-2 mx-1 font-medium text-gray-700 bg-white rounded-md hover:bg-blue-500 hover:text-white">
-                                    Next
-                                </a>
+                            <div>
+                                <div
+                                    class="flex scale-120 justify-end px-10 py-4 border-t border-gray-200 dark:border-gray-700">
+                                    <UPagination v-model="page" :page-count="4" :total="10" :ui="{
+                                        wrapper: 'flex items-center gap-1',
+                                        rounded: '!rounded-full min-w-[32px] justify-center',
+                                        default: {
+                                            activeButton: {
+                                                variant: 'outline'
+                                            }
+                                        }
+                                    }" />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="hidden w-4/12 -mx-8 lg:block sticky top-8 h-full">
                         <div class="px-8">
-                            <h1 class="mb-4 text-xl font-bold text-gray-700">Top Authors</h1>
+                            <h1 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-200">Top Authors</h1>
                             <div class="flex flex-col max-w-sm px-6 py-4 mx-auto ">
                                 <ul class="-mx-4">
 
                                     <li v-for="i in 5" :key="i"
-                                        class="flex flex-col p-4  shadow-md hover:shodow-lg rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105 first:mt-0 mt-4">
+                                        class="flex flex-col p-4  shadow-md dark:shadow-sm hover:shodow-lg dark:shadow-primary rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105 first:mt-0 mt-4">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center mr-auto">
 
@@ -91,7 +85,8 @@
                                                 </div>
 
                                                 <div class="flex flex-col ml-3">
-                                                    <div class="font-medium leading-none text-black">Eyob Nigussie</div>
+                                                    <div class="font-medium leading-none text-black dark:text-gray-100">Eyob
+                                                        Nigussie</div>
                                                     <p class="text-sm text-gray-500 leading-none mt-1">UI/UX Designer
                                                     </p>
                                                 </div>
@@ -121,40 +116,27 @@
                             </div>
                         </div>
                         <div class="px-8 mt-10">
-                            <h1 class="mb-4 text-xl font-bold text-gray-700">Categories</h1>
-                            <div class="flex flex-col max-w-sm px-4 py-6 mx-auto bg-white rounded-lg shadow-md">
+                            <h1 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-200">Categories</h1>
+                            <div
+                                class="flex flex-col max-w-sm px-4 py-6 mx-auto bg-gray-50 dark:bg-gray-950 rounded-lg shadow-md">
                                 <ul>
-                                    <li><a href="#"
+
+
+                                    <li v-for="i in 5" :key="i" class="mt-2"><a href="#"
                                             class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            AWS</a></li>
-                                    <li class="mt-2"><a href="#"
-                                            class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            Laravel</a></li>
-                                    <li class="mt-2"><a href="#"
-                                            class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            Vue</a>
+                                            Design</a>
                                     </li>
-                                    <li class="mt-2"><a href="#"
-                                            class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            Design</a></li>
-                                    <li class="flex items-center mt-2"><a href="#"
-                                            class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            Django</a></li>
-                                    <li class="flex items-center mt-2"><a href="#"
-                                            class="mx-1 font-bold text-gray-700 hover:text-gray-600 hover:underline">-
-                                            PHP</a>
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
                         <div class="px-8 mt-10">
-                            <h1 class="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
-                            <div class="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white rounded-lg shadow-md">
-                                <div class="flex items-center justify-center"><a href="#"
-                                        class="px-2 py-1 text-sm text-green-100 bg-gray-600 rounded hover:bg-gray-500">Laravel</a>
-                                </div>
+                            <h1 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-200">Recent Post</h1>
+                            <div
+                                class="flex flex-col max-w-sm px-8 py-6 mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md">
+
                                 <div class="mt-4"><a href="#"
-                                        class="text-lg font-medium text-gray-700 hover:underline">Build
+                                        class="text-lg font-medium text-gray-700 dark:text-gray-200 hover:underline">Build
                                         Your New Idea with Laravel Freamwork.</a></div>
                                 <div class="flex items-center justify-between mt-4">
                                     <div class="flex items-center"><img

@@ -1,5 +1,5 @@
 <template>
-    <div class=" bg-gray-100">
+    <div class=" bg-gray-100 dark:bg-black">
 
         <div class="px-6 py-8">
             <div class="container flex  justify-between mx-auto">
@@ -8,7 +8,7 @@
                         Top Writers
                     </h2>
                     <div v-for="i in 10" :key="i" class="flex flex-col sticky  top-0 z-10">
-                        <div class="bg-white  shadow-lg  rounded-2xl p-4">
+                        <div class="bg-white dark:bg-black  shadow-lg dark:border border-gray-900 rounded-2xl p-4">
                             <div class="flex-none sm:flex">
                                 <div class=" relative h-32 w-32   sm:mb-0 mb-3">
                                     <img src="https://tailwindcomponents.com/storage/avatars/njkIbPhyZCftc4g9XbMWwVsa7aGVPajYLRXhEeoo.jpg"
@@ -27,10 +27,10 @@
                                     <div class="flex items-center justify-between sm:mt-2">
                                         <div class="flex items-center">
                                             <div class="flex flex-col">
-                                                <NuxtLink
-                                                    class="w-full cursor-pointer hover:underline underline-offset-2 flex-none text-lg text-black font-bold leading-none">
+                                                <NuxtLink to="/account/profile-2"
+                                                    class="w-full cursor-pointer hover:underline underline-offset-2 flex-none text-lg text-black dark:text-gray-400 font-bold leading-none">
                                                     Eyob Nigussie</NuxtLink>
-                                                <div class="flex-auto text-gray-400 my-1">
+                                                <div class="flex-auto text-gray-500 my-1">
                                                     <span class="mr-3 ">UI/UX Designer</span><span
                                                         class="mr-3 border-r border-gray-600  max-h-0"></span><span>Cochin,
                                                         IND</span>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
                 <div class="hidden w-4/12 -mx-8 lg:block sticky top-32 h-full">
-                    <div class="mb-7 p-5 border-[#eef0fc] border text-center bg-[#f9faff] relative z-30">
+                    <div class="mb-7 p-5 border-gray-100 border rounded-3xl text-center bg-white relative z-30">
                         <form>
                             <div class="relative">
                                 <input type="text" placeholder="Search Post.." class="h-[70px] text-base p-[6px_50px_6px_20px] rounded-[5px]
@@ -167,20 +167,16 @@
                             </div>
                         </form>
                     </div>
-                    <div class="mb-7 p-5 border-[#eef0fc] border">
-                        <h3 class="text-2xl text-[#232f4b] relative capitalize pb-5 mb-5
-                                  before:absolute before:left-0 before:bottom-0 before:w-[55px] before:h-[4px]
-                                  before:rounded-[10px]
-                                  before:bg-primary
-                                  after:absolute after:left-[65px] after:bottom-0 after:w-[70%] after:h-[4px]
-                                  after:rounded-[10px]
-                                  after:bg-[#f2f2f2] ">Trending Topics</h3>
+                    <div class="mb-7 p-5 border-gray-100 rounded-3xl border">
+                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
+                                  
+                                 ">Trending Topics</h3>
                         <ul>
 
                             <li v-for="i in 6" :key="i"
-                                class="text-lg font-normal relative sm:text-base mt-5 pt-5 border-t border-[#eef0fc]">
+                                class="text-lg font-normal relative sm:text-base mt-5 pt-5 border-t border-gray-100">
 
-                                <a href="blog-single.html"
+                                <a
                                     class="block text-[#474f62] relative pl-2  before:text-base transition-all hover:text-primary hover:before:text-primary before:transition-all">
                                     <Icon name="heroicons:chevron-right" class="w-6 h-6" />
                                     Photography
@@ -190,14 +186,9 @@
 
                         </ul>
                     </div>
-                    <div class="mb-7 p-7 border-[#eef0fc] border">
-                        <h3 class="text-2xl text-[#232f4b] relative capitalize pb-5 mb-5
-                                  before:absolute before:left-0 before:bottom-0 before:w-[55px] before:h-[4px]
-                                  before:rounded-[10px]
-                                  before:bg-primary
-                                  after:absolute after:left-[65px] after:bottom-0 after:w-[80%] after:h-[4px]
-                                  after:rounded-[10px]
-                                  after:bg-[#f2f2f2]">Popular Post</h3>
+                    <div class="mb-7 p-7 border-gray-100 border rounded-3xl">
+                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
+                                  ">Popular Post</h3>
                         <div class="posts">
 
                             <div v-for="i in 5" :key="i" class="overflow-hidden mt-4 pt-4">
@@ -209,8 +200,8 @@
                                     <span class="text-sm text-[#444444] relative top-[-5px]">22 May 2024
                                     </span>
                                     <h4 class="text-lg font-medium"><a
-                                            class="text-[#232f4b] transition-all hover:text-primary"
-                                            href="blog-single.html">Best tourism site all over the
+                                            class="text-[#232f4b] transition-all hover:text-primary">Best tourism site all
+                                            over the
                                             world.</a>
                                     </h4>
                                 </div>
@@ -219,14 +210,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-7 p-7 border-[#eef0fc] border">
-                        <h3 class="text-2xl text-[#232f4b] relative capitalize pb-5 mb-5
-                                  before:absolute before:left-0 before:bottom-0 before:w-[55px] before:h-[4px]
-                                  before:rounded-[10px]
-                                  before:bg-primary
-                                  after:absolute after:left-[65px] after:bottom-0 after:w-[80%] after:h-[4px]
-                                  after:rounded-[10px]
-                                  after:bg-[#f2f2f2]">Tags</h3>
+                    <div class="mb-7 p-7 border-gray-100 border rounded-3xl">
+                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
+                                  ">Tags</h3>
                         <ul class="overflow-hidden">
                             <li class="float-left mr-[8px] mb-[8px]"><a
                                     class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"

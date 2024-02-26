@@ -51,12 +51,16 @@ export default defineAppConfig({
             placeholder: "placeholder-primary-400 font-base p-2"
         },
         dropdown: {
+
+
+            trigger: ' h-10 ',
             item: {
                 padding: 'p-2',
                 base: 'p-2'
             }
         },
         divider: {
+
             container: {
                 base: 'text-primary'
             }
