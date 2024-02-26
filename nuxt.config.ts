@@ -2,11 +2,17 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["./assets/css/tailwind.css"],
-  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content"],
+  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content", "@nuxt/image"],
   content: {
     highlight: {
       theme: 'nord',
     }
   },
 
+
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ["hyvor-talk-comments"].includes(tag),
+    },
+  },
 })

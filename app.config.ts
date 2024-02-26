@@ -1,7 +1,7 @@
 export default defineAppConfig({
 
     ui: {
-        primary: 'blue',
+        primary: 'green',
         gray: 'cool',
 
         table: {
@@ -26,10 +26,14 @@ export default defineAppConfig({
             wrapper: 'bg-primary-200 rounded-xl mt-8'
         },
         accordion: {
-            wrapper: 'w-8 ',
+            wrapper: '',
+            container: 'py-2',
             item: {
-                padding: 'pl-16 pt-10',
-                color: 'text-primary font-bold underline underline-offset-2'
+                padding: 'p-6',
+                color: 'text-primary font-bold'
+            },
+            default: {
+                class: 'py-3'
             }
         },
         inputMenu: {
