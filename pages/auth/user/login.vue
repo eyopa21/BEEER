@@ -23,14 +23,14 @@ definePageMeta({
                         </p>
                         <p class="text-gray-500 dark:text-gray-400 mt-1">
                             Don't have an account?
-                            <a href="/signup" class="text-primary font-medium">Sign up</a>.
+                            <NuxtLink to="/auth/user/signup" class="text-primary font-medium">Sign up</NuxtLink>.
                         </p>
                     </div>
-                    <div class="gap-y-6 flex flex-col flex-col-reverse">
+                    <div class="gap-y-6 flex  flex-col-reverse">
                         <div class="space-y-3">
                             <button type="button"
                                 class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 text-gray-900 dark:text-white bg-white hover:bg-gray-50 disabled:bg-white dark:bg-gray-900 dark:hover:bg-gray-800/50 dark:disabled:bg-gray-900 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 w-full flex justify-center items-center">
-                                <span class="i-simple-icons-github flex-shrink-0 h-5 w-5"></span><span class="">Continue
+                                <Icon name="i-mdi-github" class="flex-shrink-0 h-5 w-5" /><span class="">Continue
                                     with GitHub</span>
                             </button>
                         </div>
@@ -42,8 +42,8 @@ definePageMeta({
                             </div>
                             <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
                         </div>
-                        <form class="space-y-6" data-n-ids='{"rdwNsAGMKE:0":"rdwNsAGMKE:0"}'>
-                            <div class="" data-n-ids='{"aUkbh3TvCg:0":"aUkbh3TvCg:1"}'>
+                        <form class="space-y-6">
+                            <div class="">
                                 <div class="">
                                     <div class="flex content-center items-center justify-between text-sm">
                                         <label for="aUkbh3TvCg:1"
@@ -58,7 +58,7 @@ definePageMeta({
                                     </div>
                                 </div>
                             </div>
-                            <div class="" data-n-ids='{"aUkbh3TvCg:0":"aUkbh3TvCg:2"}'>
+                            <div class="">
                                 <div class="">
                                     <div class="flex content-center items-center justify-between text-sm">
                                         <label for="aUkbh3TvCg:2"

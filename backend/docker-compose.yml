@@ -1,5 +1,4 @@
 version: "3.6"
-
 services:
   postgres:
     image: postgres:15
@@ -9,9 +8,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
-    env_file:
-      - .env
-    image: hasura/graphql-engine:v2.36.0
+    image: hasura/graphql-engine:v2.37.0
     ports:
       - "8080:8080"
     restart: always
@@ -30,13 +27,12 @@ services:
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: ${ADMIN_SECRET}
       HASURA_GRAPHQL_JWT_SECRET: '{"key": "${JWT_SECRET}","type": "HS256"}'
-      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
       HASURA_GRAPHQL_METADATA_DEFAULTS: '{"backend_configs":{"dataconnector":{"athena":{"uri":"http://data-connector-agent:8081/api/v1/athena"},"mariadb":{"uri":"http://data-connector-agent:8081/api/v1/mariadb"},"mysql8":{"uri":"http://data-connector-agent:8081/api/v1/mysql"},"oracle":{"uri":"http://data-connector-agent:8081/api/v1/oracle"},"snowflake":{"uri":"http://data-connector-agent:8081/api/v1/snowflake"}}}}'
     depends_on:
       data-connector-agent:
         condition: service_healthy
   data-connector-agent:
-    image: hasura/graphql-data-connector:v2.36.0
+    image: hasura/graphql-data-connector:v2.37.0
     restart: always
     ports:
       - 8081:8081

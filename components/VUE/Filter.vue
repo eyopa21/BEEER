@@ -16,6 +16,7 @@ const items = [
 
 <template>
     <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
-        <UButton color="white" label="Filter" trailing-icon="i-heroicons-chevron-down-20-solid" />
+        <UButton color="white" label="Filter" trailing-icon="i-heroicons-chevron-down-20-solid"
+            class="px-6 text-black font-base" />
     </UDropdown>
 </template>

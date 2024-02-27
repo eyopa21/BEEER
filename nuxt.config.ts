@@ -27,7 +27,6 @@ export default defineNuxtConfig({
           type: 'image/png',
           href: '/favicon.png'
         }
-
       ],
       noscript: [
         { children: 'JavaScript is required' }

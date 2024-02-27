@@ -1,8 +1,3 @@
-<script setup>
-
-const page = ref(1)
-
-</script>
 
 
 <template>
@@ -49,22 +44,7 @@ const page = ref(1)
                             </div>
                         </div>
 
-                        <div class="mt-8">
-                            <div>
-                                <div
-                                    class="flex scale-120 justify-end px-10 py-4 border-t border-gray-200 dark:border-gray-700">
-                                    <UPagination v-model="page" :page-count="4" :total="10" :ui="{
-                                        wrapper: 'flex items-center gap-1',
-                                        rounded: '!rounded-full min-w-[32px] justify-center',
-                                        default: {
-                                            activeButton: {
-                                                variant: 'outline'
-                                            }
-                                        }
-                                    }" />
-                                </div>
-                            </div>
-                        </div>
+                        <VUEPagination />
                     </div>
                     <div class="hidden w-4/12 -mx-8 lg:block sticky top-8 h-full">
                         <div class="px-8">
@@ -73,7 +53,7 @@ const page = ref(1)
                                 <ul class="-mx-4">
 
                                     <li v-for="i in 5" :key="i"
-                                        class="flex flex-col p-4  shadow-md dark:shadow-sm hover:shodow-lg dark:shadow-primary rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105 first:mt-0 mt-4">
+                                        class="flex flex-col p-4  shadow-sm dark:shadow-sm hover:shodow-lg dark:shadow-primary rounded-2xl cursor-pointer transition ease-in duration-500  transform hover:scale-105 first:mt-0 mt-4">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center mr-auto">
 
@@ -87,7 +67,7 @@ const page = ref(1)
                                                 <div class="flex flex-col ml-3">
                                                     <div class="font-medium leading-none text-black dark:text-gray-100">Eyob
                                                         Nigussie</div>
-                                                    <p class="text-sm text-gray-500 leading-none mt-1">UI/UX Designer
+                                                    <p class="text-sm text-gray-500 leading-none mt-1">Software Engineer
                                                     </p>
                                                 </div>
                                             </div>

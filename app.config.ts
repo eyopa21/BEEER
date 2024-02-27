@@ -4,6 +4,7 @@ export default defineAppConfig({
         primary: 'green',
         gray: 'cool',
 
+
         table: {
             wrapper: '',
             divide: '',
@@ -51,9 +52,7 @@ export default defineAppConfig({
             placeholder: "placeholder-primary-400 font-base p-2"
         },
         dropdown: {
-
-
-            trigger: ' h-10 ',
+            trigger: ' h-8 ',
             item: {
                 padding: 'p-2',
                 base: 'p-2'

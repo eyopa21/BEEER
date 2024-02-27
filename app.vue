@@ -1,5 +1,6 @@
 <script setup>
 const height = ref(5)
+
 </script>
 
 
@@ -8,6 +9,7 @@ const height = ref(5)
     <NuxtLayout>
       <NuxtLoadingIndicator color="linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246), rgb(147, 51, 234))"
         :height="height" />
+
       <NuxtPage />
     </NuxtLayout>
   </div>
