@@ -1,0 +1,13 @@
+type Mutation {
+  SignUp(
+    email: String!
+    password: String!
+    beeer_name: String!
+  ): SignUpOutput
+}
+
+type SignUpOutput {
+  id: uuid!
+  token: String!
+}
+

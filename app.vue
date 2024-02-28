@@ -1,17 +1,22 @@
 <script setup>
 const height = ref(5)
-
+const layout = useLayout();
 </script>
 
 
 <template>
   <div class="bg-white dark:bg-black scroll-smooth  min-w-screen w-screen transition-colors duration-100">
     <NuxtLayout>
+      <div class="fixed top-8 right-8">
+        <VUEAlert v-if="layout.showAlert.message" />
+      </div>
       <NuxtLoadingIndicator color="linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246), rgb(147, 51, 234))"
         :height="height" />
 
       <NuxtPage />
+
     </NuxtLayout>
+
   </div>
 </template>
 

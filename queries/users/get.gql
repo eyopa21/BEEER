@@ -1,0 +1,13 @@
+query get_current_user($id: uuid!) {
+  authors_by_pk(id: $id) {
+    id
+    beeer_name
+    email
+    is_deleted
+    is_suspended
+    is_verified
+    profile_detail {
+      id
+    }
+  }
+}

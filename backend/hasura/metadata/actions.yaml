@@ -1,6 +1,13 @@
-actions: []
+actions:
+  - name: SignUp
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4002/api/v1/auth/author/signup
+    permissions:
+      - role: anonymous
 custom_types:
-    enums: []
-    input_objects: []
-    objects: []
-    scalars: []
+  enums: []
+  input_objects: []
+  objects:
+    - name: SignUpOutput
+  scalars: []

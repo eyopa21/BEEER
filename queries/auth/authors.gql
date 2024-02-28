@@ -1,0 +1,17 @@
+mutation sign_up_query(
+  $beeer_name: String!
+  $email: String!
+  $password: String!
+) {
+  SignUp(beeer_name: $beeer_name, email: $email, password: $password) {
+    id
+    token
+  }
+}
+mutation verify_query($code: String!, $id: uuid!) {
+  Verify(code: $code, id: $id) {
+    email
+    id
+    is_verified
+  }
+}

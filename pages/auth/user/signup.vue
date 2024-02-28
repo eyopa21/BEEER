@@ -1,17 +1,53 @@
 <script setup>
-definePageMeta({ layout: 'auth' })
-import { SignUpValidationSchema } from '../../../zod/SignUpSchema'
-
+definePageMeta({
+    layout: 'auth'
+})
+import {
+    SignUpValidationSchema
+} from '../../../zod/SignUpSchema'
+import { sign_up_query } from '../../../queries/auth/authors.gql'
+const {
+    onLogin,
+    onLogout,
+    getToken
+} = useApollo()
+const {
+    mutate: SignUp,
+    onDone,
+    onError,
+    loading
+} = useMutation(sign_up_query)
+const router = useRouter();
+const layout = useLayout();
+const UID = useCookie('UID')
 const SignUpState = ref({
     beeer_name: '',
     email: '',
     password: ''
 })
-
-const SignUp = () => {
-    console.log("signup")
+const SIGNUP = () => {
+    UID.value = null
+    onLogout()
+    SignUp({
+        beeer_name: SignUpState.value.beeer_name,
+        email: SignUpState.value.email,
+        password: SignUpState.value.password
+    })
+    onDone(async res => {
+        await onLogout()
+        await onLogin(res.data.SignUp.token)
+        UID.value = res.data.SignUp.id;
+        router.push('/auth/user/verify')
+    })
+    onError(async err => {
+        UID.value = null
+        await onLogout()
+        layout.value.showAlert = {
+            message: err.message,
+            error: true
+        }
+    })
 }
-
 </script>
 
 <template>
@@ -37,7 +73,7 @@ const SignUp = () => {
                             <UDivider label="OR" />
 
                         </div>
-                        <UForm :schema="SignUpValidationSchema" :state="SignUpState" class="space-y-6" @submit="SignUp">
+                        <UForm :schema="SignUpValidationSchema" :state="SignUpState" class="space-y-6" @submit="SIGNUP">
 
                             <div class="">
                                 <UFormGroup name="beeer_name" v-slot="{ error }" label="Beeer Name"
@@ -58,7 +94,7 @@ const SignUp = () => {
                                         :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                                 </UFormGroup>
                             </div>
-                            <UButton type="submit"
+                            <UButton type="submit" :loading="loading"
                                 class="focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 shadow-sm text-white dark:text-gray-900 bg-primary-500 hover:bg-primary-600 disabled:bg-primary-500 dark:bg-primary-400 dark:hover:bg-primary-500 dark:disabled:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 w-full flex justify-center items-center">
                                 <span>Create
                                     account</span>

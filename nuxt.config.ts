@@ -2,19 +2,21 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["./assets/css/tailwind.css"],
-  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content", "@nuxt/image"],
+  modules: ['@nuxt/ui', 'nuxt-swiper', "@nuxt/content", "@nuxt/image", "@nuxtjs/apollo"],
   content: {
     highlight: {
       theme: 'nord',
     }
   },
 
-
-  vue: {
-    compilerOptions: {
-      isCustomElement: (tag) => ["hyvor-talk-comments"].includes(tag),
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: 'http://localhost:8080/v1/graphql'
+      }
     },
   },
+
   app: {
     pageTransition: { name: 'slide-fade' },
     head: {

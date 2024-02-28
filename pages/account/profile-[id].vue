@@ -1,3 +1,9 @@
+<script setup>
+const UID = useCookie('UID')
+const route = useRoute();
+
+</script>
+
 <template>
     <div>
 
@@ -57,7 +63,9 @@
 
                                     Eyob Nigussie
                                 </span>
-                                <UButton to="/account/settings-3" size="sm" color="amber" square variant="solid">Crown
+
+                                <UButton v-if="route.params.id !== UID" size="sm" color="amber" square variant="solid">
+                                    Crown
                                 </UButton>
                             </div>
                             <a class="italic text-sm text-primary underline" href="#">Personal portfolio</a>
@@ -92,3 +100,4 @@
         </div>
     </div>
 </template>
+
