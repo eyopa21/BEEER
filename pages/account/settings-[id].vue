@@ -32,8 +32,6 @@
                     </p>
                     <div class="divide-y divide-gray-200">
 
-
-
                         <div v-for="(setting, i) in settings" :key="i" class="flex justify-between items-center py-4">
                             <div class="flex flex-col flex-grow">
                                 <div class="text-lg font-semibold text-gray-900 dark:text-gray-500">
@@ -49,7 +47,6 @@
 
                     </div>
                     <div class="mt-6">
-
                         <VueButton @click="save" name="Save all" variation="normal" type="button" />
                     </div>
                 </div>

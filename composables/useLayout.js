@@ -11,7 +11,7 @@ export default function() {
             showAlert: {
                 message: '',
                 error: true,
-               
+                warning: false
             },
             reportLoading: false
 

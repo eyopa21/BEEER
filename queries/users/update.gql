@@ -1,0 +1,31 @@
+mutation update_profile_detail(
+  $id: uuid!
+  $first_name: String!
+  $last_name: String!
+  $bio: String!
+  $date_of_birth: date!
+  $location: String!
+  $phone_number: String!
+  $profession: String!
+  $website: String!
+  $work_email: String!
+  $work_place: String!
+) {
+  update_profile_details_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      bio: $bio
+      date_of_birth: $date_of_birth
+      first_name: $first_name
+      last_name: $last_name
+      location: $location
+      phone_number: $phone_number
+      profession: $profession
+      website: $website
+      work_email: $work_email
+      work_place: $work_place
+    }
+  ) {
+    id
+  }
+}

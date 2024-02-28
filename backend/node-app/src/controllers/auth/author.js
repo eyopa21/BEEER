@@ -76,30 +76,31 @@ exports.signUp = async (req, res, next) => {
  password
   }
 }
-`;
+`
+    ;
 
   const { email, password, beeer_name } =
     req.body.input;
   const hashedPassword = await bcrypt.hash(password, 10);
   let code = Math.floor(1000 + Math.random() * 900000).toString();
   try {
-    const data = await client.request(HASURA_OPERATION, {
-      email,
-      password: hashedPassword,
-      beeer_name, 
-      code
-    });
+    sendEmail(email, code.toString(), "Here is your Verification code")
+      .then(async () => {
+        const data = await client.request(HASURA_OPERATION, {
+          email,
+          password: hashedPassword,
+          beeer_name,
+          code
+        });
 
-    if (data.insert_authors_one) {
-      sendEmail(email, code.toString(), "Here is your Verification code")
-        .then((email) => {
+        if (data.insert_authors_one) {
           console.log("res", email);
           const tokenContents = {
             sub: "user",
             email: data.insert_authors_one.email,
             uid: data.insert_authors_one.id,
             "https://hasura.io/jwt/claims": {
-              "x-hasura-allowed-roles": ["author","anonymous"],
+              "x-hasura-allowed-roles": ["author", "anonymous"],
               "x-hasura-default-role": "author",
               "x-hasura-user-id": data.insert_authors_one.id.toString(),
             },
@@ -114,15 +115,16 @@ exports.signUp = async (req, res, next) => {
               });
             }
           });
-        })
-        .catch((err) => {
-          return res.status(400).json({ message: "Email sending falied" });
-        });
-    } else {
-      return res.status(400).json({ message: "signup failed" });
-    }
+
+        } else {
+          return res.status(400).json({ message: "signup failed" });
+        }
+      })
+      .catch((err) => {
+        return res.status(400).json({ message: "Please check your connection, and try again" });
+      });
   } catch (err) {
-    
+
     console.log(err);
     if (
       err.response.errors[0].message ===
@@ -145,6 +147,15 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.verify = async (req, res, next) => {
+
+  const GET_DATA = `
+  query getData($id: uuid!){
+  authors_by_pk(id: $id) {
+    email
+  }
+}
+  `
+
   const HASURA_OPERATION = `
 mutation ($id: uuid!, $code: String!) {
   update_authors(where: {id: {_eq: $id}, _and: {code: {_eq: $code}}}, _set: {is_verified: true}) {
@@ -154,36 +165,52 @@ mutation ($id: uuid!, $code: String!) {
       is_verified
     }
   }
+  insert_profile_details_one(object: {author_id: $id}) {
+    id
+  }
 }
 
 `;
   const { id, code } = req.body.input;
   try {
-    const data = await client.request(HASURA_OPERATION, {
-      id,
-      code,
-    });
-   
-    if (data.update_authors.returning[0]) {
-      sendEmail(
-        data.update_authors.returning[0].email,
-        "Thank you",
-        "You are successfully verified"
-      )
-        .then((email) => {
+     const data = await client.request(GET_DATA, {
+          id 
+     });
+    
+    if (data.authors_by_pk) {
+    
+    sendEmail(
+      data.authors_by_pk.email,
+      "Thank you",
+      "You are successfully verified"
+    )
+      .then(async (email) => {
+        const data = await client.request(HASURA_OPERATION, {
+          id,
+          code,
+        });
+
+        if (data.update_authors.returning[0]) {
+
           res.json({
             ...data.update_authors.returning[0],
           });
-        })
-        .catch((err) => {
-          return res.status(400).json({ message: "Email sending falied" });
-        });
+
+        } else {
+          return res
+            .status(400)
+            .json({ message: "Cannot verify please try again" });
+        }
+      })
+      .catch((err) => {
+        console.log("err", err)
+        return res.status(400).json({ message: "Please check your connection, and try again" });
+      });
     } else {
-      return res
-        .status(400)
-        .json({ message: "Cannot verify please try again" });
-    }
+       return res.status(400).json({ message: "user not found" });
+      }
   } catch (err) {
+    console.log("ejhf", err)
     return res.status(400).json({ message: err.message });
   }
 };
@@ -252,19 +279,19 @@ password
   try {
     const userData = await client.request(GET_USER_HASURA_OPERATION, { id });
     if (userData.users_by_pk) {
-        const data = await client.request(HASURA_OPERATION, {
-          id,
-          new_password: hashedPassword,
+      const data = await client.request(HASURA_OPERATION, {
+        id,
+        new_password: hashedPassword,
+      });
+      if (data.update_users_by_pk) {
+
+        res.json({
+          ...data.update_users_by_pk,
         });
-        if (data.update_users_by_pk) {
-      
-          res.json({
-            ...data.update_users_by_pk,
-          });
-        } else {
-          return res.status(400).json({ message: "Password Updating failed" });
-        }
-      
+      } else {
+        return res.status(400).json({ message: "Password Updating failed" });
+      }
+
     } else {
       return res.status(400).json({ message: "There is no such user" });
     }

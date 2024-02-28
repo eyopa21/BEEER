@@ -6,8 +6,21 @@ type Mutation {
   ): SignUpOutput
 }
 
+type Mutation {
+  Verify(
+    id: uuid!
+    code: String!
+  ): verifyOutput
+}
+
 type SignUpOutput {
   id: uuid!
   token: String!
+}
+
+type verifyOutput {
+  email: String!
+  id: uuid!
+  is_verified: Boolean!
 }
 

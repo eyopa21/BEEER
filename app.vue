@@ -1,13 +1,27 @@
 <script setup>
 const height = ref(5)
 const layout = useLayout();
+const { myAuth } = useAuth()
+
+const loading = ref(true)
+
+onMounted(async () => {
+  try {
+    const res = await myAuth()
+    console.log("tokichaw", res)
+    loading.value = false;
+  } catch (err) {
+    console.log("tokierror", err)
+    loading.value = false;
+  }
+})
 </script>
 
 
 <template>
   <div class="bg-white dark:bg-black scroll-smooth  min-w-screen w-screen transition-colors duration-100">
     <NuxtLayout>
-      <div class="fixed top-8 right-8">
+      <div class="fixed top-8 right-8 z-[2147483647]">
         <VUEAlert v-if="layout.showAlert.message" />
       </div>
       <NuxtLoadingIndicator color="linear-gradient(to right, rgb(134, 239, 172), rgb(59, 130, 246), rgb(147, 51, 234))"
@@ -16,6 +30,10 @@ const layout = useLayout();
       <NuxtPage />
 
     </NuxtLayout>
+    <div v-if="loading" class="fixed inset-0 z-50 bg-gray-900  max-h-screen overscroll-contain  max-w-screen opacity-80 ">
+
+      <VUELoading />
+    </div>
 
   </div>
 </template>

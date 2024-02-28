@@ -1,3 +1,66 @@
 table:
   name: profile_details
   schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - date_of_birth
+        - bio
+        - first_name
+        - last_name
+        - location
+        - phone_number
+        - profession
+        - profile_picture
+        - website
+        - work_email
+        - work_place
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - date_of_birth
+        - bio
+        - first_name
+        - last_name
+        - location
+        - phone_number
+        - profession
+        - profile_picture
+        - website
+        - work_email
+        - work_place
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - bio
+        - created_at
+        - date_of_birth
+        - first_name
+        - last_name
+        - location
+        - phone_number
+        - profession
+        - profile_picture
+        - updated_at
+        - website
+        - work_email
+        - work_place
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check: {}
+    comment: ""

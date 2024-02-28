@@ -5,9 +5,16 @@ actions:
       handler: http://host.docker.internal:4002/api/v1/auth/author/signup
     permissions:
       - role: anonymous
+  - name: Verify
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4002/api/v1/auth/author/verify
+    permissions:
+      - role: author
 custom_types:
   enums: []
   input_objects: []
   objects:
     - name: SignUpOutput
+    - name: verifyOutput
   scalars: []

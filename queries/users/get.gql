@@ -1,4 +1,4 @@
-query get_current_user($id: uuid!) {
+query get_current_user_query($id: uuid!) {
   authors_by_pk(id: $id) {
     id
     beeer_name
@@ -8,6 +8,20 @@ query get_current_user($id: uuid!) {
     is_verified
     profile_detail {
       id
+      first_name
+      last_name
+      location
+      phone_number
+      profession
+      profile_picture
+      website
+      work_email
+      work_place
+      date_of_birth
+      bio
+      author_id
+      created_at
+      updated_at
     }
   }
 }
