@@ -1,0 +1,34 @@
+table:
+  name: certificates
+  schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - end_date
+        - start_date
+        - description
+        - image
+        - location
+        - title
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - end_date
+        - start_date
+        - description
+        - image
+        - location
+        - title
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""

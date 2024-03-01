@@ -130,7 +130,7 @@ const ADDorUPDATE = () => {
                                     name="Edit" variation="edit" type="button"
                                     className=" bg-white rounded-lg border border-gray-300 hover:bg-gray-50 hover:scale-[1.02] transition-transform" />
                                 <VUEButton @click="DELETE(link.id)" name="Delete" type="button" variation="delete" />
-                                <!--VUEAlert v-if="layout.showDeleteAlert" @delete="deleteLinks(link.id)" :loading="loading" /-->
+
                             </div>
                         </div>
                     </li>
@@ -149,7 +149,7 @@ const ADDorUPDATE = () => {
                     ring: '',
                     divide: 'divide-y divide-gray-100 dark:divide-gray-800',
                 }">
-                    <template #header> FInish the Process </template>{{ toBeEdited }}
+                    <template #header> FInish the Process </template>
                     <div class="flex flex-col space-y-4">
 
                         <UFormGroup name="link_name" v-slot="{ error }" label="Select the Social account"

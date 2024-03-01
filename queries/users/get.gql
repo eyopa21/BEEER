@@ -35,3 +35,18 @@ query get_current_user_query($id: uuid!) {
     }
   }
 }
+
+query get_certificates_query($author_id: uuid!) {
+  certificates(where: { author_id: { _eq: $author_id } }) {
+    id
+    author_id
+    title
+    description
+    location
+    start_date
+    end_date
+    image
+    created_at
+    updated_at
+  }
+}

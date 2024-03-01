@@ -1,4 +1,4 @@
-import get_current_user_query from "../queries/users/get.gql";
+import {get_current_user_query} from "../queries/users/get.gql";
 export const useAuth = () => {
   const router = useRouter();
   const { onLogin, onLogout, getToken } = useApollo();

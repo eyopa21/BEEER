@@ -1,4 +1,5 @@
 - "!include public_authors.yaml"
+- "!include public_certificates.yaml"
 - "!include public_profile_details.yaml"
 - "!include public_social_links.yaml"
 - "!include public_social_medias_enum.yaml"
