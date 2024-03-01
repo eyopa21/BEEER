@@ -1,14 +1,31 @@
 <script setup>
 definePageMeta({ layout: ['account'] })
 
+import { CertificatesValidationSchema } from '../../zod/ProfileSettingsSchema'
 import { get_certificates_query } from '../../queries/users/get.gql'
+import { InsertCertificates_query } from '../../queries/users/insert.gql'
+
 const UID = useCookie('UID')
 const { onResult, onError, loading, refetch } = useQuery(get_certificates_query, { author_id: UID.value })
+//const { mutate: UpdateCertificates, onDone: onUpdateDone, onError: onUpdateError, loading: updateLoading } = useMutation(update_social_links_query)
+const { mutate: AddCertificates, onDone: onAddDone, onError: onAddError, loading: addLoading } = useMutation(InsertCertificates_query)
+//const { mutate: DeleteCertificates, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_social_links_query)
+
 
 
 const isOpen = ref(false)
 const layout = useLayout();
 const certificates = ref([])
+
+const State = ref({
+    base64: '',
+    title: '',
+    description: '',
+    start_date: '',
+    end_date: '',
+    location: ''
+})
+
 const items = (row) => [
     [{
         label: 'Edit',
@@ -41,6 +58,23 @@ onResult(res => {
 onError(err => {
     layout.value.showAlert = { error: true, message: err.message }
 })
+
+const ADDorUPDATE = () => {
+    if (State.value.base64) {
+        AddCertificates({ author_id: UID.value, title: State.value.title, description: State.value.description, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
+
+        onAddDone(res => {
+            console.log("done")
+        })
+        onError(err => {
+            layout.value.showAlert = { error: true, message: err.message }
+        })
+    } else {
+        layout.value.showAlert = { error: true, message: 'Please, select image first' }
+    }
+
+}
+
 </script>
 <template>
     <div class="w-full ml-64 px-4 mt-8">
@@ -72,27 +106,28 @@ onError(err => {
         </UTable>
         <VUEPagination />
         <UModal v-model="isOpen" class="px-32">
-            <UForm>
+            <UForm :schema="CertificatesValidationSchema" :state="State" @submit="ADDorUPDATE">
                 <UCard :ui="{
                     ring: '',
                     divide: 'divide-y divide-gray-100 dark:divide-gray-800',
                 }">
-                    <template #header> FInish the Process </template>
+                    <template #header> Add new certification </template>
 
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
 
                             <UFormGroup name="title" v-slot="{ error }" label="Certification title"
                                 :eager-validation="true">
-                                <UInput type="text" placeholder="The title here ..." size="lg"
+                                <UInput v-model="State.title" type="text" placeholder="The title here ..." size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
 
-                            <UFormGroup name="subtitle" v-slot="{ error }" label="Certification subtitle"
+                            <UFormGroup name="description" v-slot="{ error }" label="Certification description"
                                 :eager-validation="true">
-                                <UInput type="text" placeholder="The subtitle here ..." size="lg"
+                                <UInput v-model="State.description" type="text" placeholder="The description here ..."
+                                    size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
@@ -100,7 +135,7 @@ onError(err => {
 
                             <UFormGroup name="start_date" v-slot="{ error }" label="Certification start date"
                                 :eager-validation="true">
-                                <UInput type="date" placeholder="Start date" size="lg"
+                                <UInput v-model="State.start_date" type="date" placeholder="Start date" size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
@@ -108,14 +143,15 @@ onError(err => {
 
                             <UFormGroup name="end_date" v-slot="{ error }" label="Certification end date"
                                 :eager-validation="true">
-                                <UInput type="date" placeholder="End date" size="lg"
+                                <UInput v-model="State.end_date" type="date" placeholder="End date" size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
 
                             <UFormGroup name="location" v-slot="{ error }" label="Location" :eager-validation="true">
-                                <UInput type="text" placeholder="Certification location..." size="lg"
+                                <UInput v-model="State.location" type="text" placeholder="Certification location..."
+                                    size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
@@ -140,27 +176,11 @@ onError(err => {
 
 
                 </div-->
-                    <div class="flex justify-center items-center w-full mt-8">
-                        <label
-                            class="flex flex-col w-full h-32 rounded border-2 border-gray-300 border-dashed cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                                <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12">
-                                    </path>
-                                </svg>
-                                <p class="py-1 text-sm text-gray-600">Upload a file or drag and drop</p>
-                                <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
-                            </div>
-                            <input ref="input" type="file" multiple class="hidden">
-                        </label>
-                    </div>
-
+                    <VUEImage @onbase64="(n) => State.base64 = n" />
 
                     <template #footer>
                         <div class="flex justify-end">
-                            <UButton size="xl" type="submit"> Update
+                            <UButton :loading="loading" size="xl" type="submit"> Update
                             </UButton>
                         </div>
                     </template>

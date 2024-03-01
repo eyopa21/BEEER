@@ -9,3 +9,36 @@ mutation insert_social_links_query(
     id
   }
 }
+
+mutation InsertCertificates_query(
+  $end_date: date!
+  $start_date: date!
+  $description: String!
+  $image: String!
+  $location: String!
+  $title: String
+  $author_id: uuid!
+) {
+  insert_certificates_one(
+    object: {
+      end_date: $end_date
+      start_date: $start_date
+      description: $description
+      image: $image
+      location: $location
+      title: $title
+      author_id: $author_id
+    }
+  ) {
+    end_date
+    start_date
+    description
+    image
+    location
+    title
+    created_at
+    updated_at
+    author_id
+    id
+  }
+}
