@@ -259,38 +259,46 @@ exports.forgotPassword = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
+  console.log("chnage password")
   const HASURA_OPERATION = `
 mutation($id: uuid!, $new_password: String!) {
-  update_users_by_pk(pk_columns: {id: $id}, _set: {password: $new_password}) {
+  update_authors_by_pk(pk_columns: {id: $id}, _set: {password: $new_password}) {
     id
   }
 }
 `;
   const GET_USER_HASURA_OPERATION = `
 query myQuery($id: uuid!){
-users_by_pk(id: $id) {
+authors_by_pk(id: $id) {
 id
 email
 password
 }
 }`;
-  const { id, new_password } = req.body.input;
+  const { id, new_password , old_password} = req.body.input;
   const hashedPassword = await bcrypt.hash(new_password.toString(), 10);
   try {
     const userData = await client.request(GET_USER_HASURA_OPERATION, { id });
-    if (userData.users_by_pk) {
-      const data = await client.request(HASURA_OPERATION, {
+    console.log(userData)
+    if (userData.authors_by_pk) {
+      const match = await bcrypt.compare(old_password, userData.authors_by_pk.password);
+      if (match) {
+        const data = await client.request(HASURA_OPERATION, {
         id,
         new_password: hashedPassword,
       });
-      if (data.update_users_by_pk) {
+      if (data.update_authors_by_pk) {
 
         res.json({
-          ...data.update_users_by_pk,
+          ...data.update_authors_by_pk,
         });
       } else {
         return res.status(400).json({ message: "Password Updating failed" });
       }
+      } else {
+        return res.status(400).json({ message: "Wrong password detected" });
+       }
+      
 
     } else {
       return res.status(400).json({ message: "There is no such user" });

@@ -8,14 +8,17 @@
                 </h1>
             </div>
 
-            <div class=" col-span-full xl:col-auto">
+            <div class="col-span-full xl:col-auto">
+
                 <SettingsProfilePicture class="sticky top-0" />
+            </div>
+            <div class=" col-span-full ">
 
                 <!--SettingsDateAndTIme/-->
-                <SettingsGuests />
+                <!--SettingsGuests /-->
                 <SettingsSocialAccounts />
             </div>
-            <div class=" col-span-2">
+            <div class=" col-span-full">
                 <SettingsGeneral />
 
                 <SettingsChangePassword />

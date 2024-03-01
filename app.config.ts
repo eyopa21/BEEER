@@ -38,7 +38,7 @@ export default defineAppConfig({
             }
         },
         inputMenu: {
-            trigger: 'h-12',
+            trigger: 'h-10',
 
         },
         input: {

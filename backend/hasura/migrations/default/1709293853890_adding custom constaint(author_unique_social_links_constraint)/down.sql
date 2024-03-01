@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- ALTER TABLE social_links
+-- ADD CONSTRAINT author_unique_social_links_constraint UNIQUE (author_id, name);

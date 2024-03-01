@@ -1,4 +1,12 @@
 type Mutation {
+  ChangePassword(
+    id: uuid!
+    new_password: String!
+    old_password: String!
+  ): ChangePasswordOutput
+}
+
+type Mutation {
   SignUp(
     email: String!
     password: String!
@@ -22,5 +30,9 @@ type verifyOutput {
   email: String!
   id: uuid!
   is_verified: Boolean!
+}
+
+type ChangePasswordOutput {
+  id: uuid!
 }
 

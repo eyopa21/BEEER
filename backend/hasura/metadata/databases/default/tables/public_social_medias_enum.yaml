@@ -1,0 +1,19 @@
+table:
+  name: social_medias_enum
+  schema: public
+is_enum: true
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - icon
+        - name
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - icon
+        - name
+      filter: {}
+    comment: ""

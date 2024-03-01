@@ -2,7 +2,7 @@
 const height = ref(5)
 const layout = useLayout();
 const { myAuth } = useAuth()
-
+const mainData = useData();
 const loading = ref(true)
 
 onMounted(async () => {
@@ -15,12 +15,21 @@ onMounted(async () => {
     loading.value = false;
   }
 })
+
+const { setSocialLinks } = useGetData();
+
+try {
+  await setSocialLinks()
+} catch (err) {
+  layout.value.showAlert = { error: true, message: 'Loading social links error' }
+}
 </script>
 
 
 <template>
   <div class="bg-white dark:bg-black scroll-smooth  min-w-screen w-screen transition-colors duration-100">
     <NuxtLayout>
+
       <div class="fixed top-8 right-8 z-[2147483647]">
         <VUEAlert v-if="layout.showAlert.message" />
       </div>
@@ -28,7 +37,7 @@ onMounted(async () => {
         :height="height" />
 
       <NuxtPage />
-
+      <UNotifications />
     </NuxtLayout>
     <div v-if="loading" class="fixed inset-0 z-50 bg-gray-900  max-h-screen overscroll-contain  max-w-screen opacity-80 ">
 

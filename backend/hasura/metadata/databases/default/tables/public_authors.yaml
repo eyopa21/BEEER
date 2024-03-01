@@ -9,6 +9,13 @@ array_relationships:
         table:
           name: profile_details
           schema: public
+  - name: social_links
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: social_links
+          schema: public
 select_permissions:
   - role: anonymous
     permission:

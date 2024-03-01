@@ -1,0 +1,66 @@
+table:
+  name: social_links
+  schema: public
+object_relationships:
+  - name: enum
+    using:
+      foreign_key_constraint_on: name
+insert_permissions:
+  - role: author
+    permission:
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - link
+        - name
+        - created_at
+        - updated_at
+        - author_id
+        - id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - link
+        - name
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - link
+        - name
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - created_at
+        - link
+        - name
+        - updated_at
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: author
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

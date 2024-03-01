@@ -25,3 +25,11 @@ export const GeneralValidationSchema = z.object({
     work_place: z.string().min(1, "Work place is required"),
     bio: z.string().min(15, 'Bio must contain atleast have 15 letters')
 })
+
+
+export const AddSocialLinkValidationSchema = z.object({
+
+    link_name: z.string().min(1, "You have to select the social media"),
+
+    the_link: z.string().min(1, 'Link is required')
+})

@@ -1,4 +1,10 @@
 actions:
+  - name: ChangePassword
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4002/api/v1/auth/author/changepassword
+    permissions:
+      - role: author
   - name: SignUp
     definition:
       kind: synchronous
@@ -17,4 +23,5 @@ custom_types:
   objects:
     - name: SignUpOutput
     - name: verifyOutput
+    - name: ChangePasswordOutput
   scalars: []

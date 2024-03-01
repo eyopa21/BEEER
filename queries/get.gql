@@ -1,0 +1,6 @@
+query GetSocialMediasEnum {
+  social_medias_enum {
+    icon
+    name
+  }
+}

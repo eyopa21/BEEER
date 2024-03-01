@@ -1,0 +1,11 @@
+mutation insert_social_links_query(
+  $author_id: uuid!
+  $name: social_medias_enum_enum!
+  $link: String!
+) {
+  insert_social_links_one(
+    object: { author_id: $author_id, name: $name, link: $link }
+  ) {
+    id
+  }
+}

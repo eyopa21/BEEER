@@ -1,11 +1,30 @@
 <script setup>
 import { ChnagePasswordValidationSchema } from '../../zod/PasswordSchema'
+import { change_password_query } from '../../queries/auth/authors.gql'
+const { mutate: Change, onDone, onError, loading } = useMutation(change_password_query)
+
+const currentUser = useCurrentUser();
+const layout = useLayout();
+
 
 const State = ref({
     old_password: '',
     new_password: '',
     confirm_password: ''
 })
+
+const CHANGE = () => {
+
+    Change({ id: currentUser.value.id, old_password: State.value.old_password, new_password: State.value.new_password })
+
+    onDone(res => {
+        layout.value.showAlert = { error: false, message: 'Password updated successfully' }
+        State.value = {}
+    })
+    onError(err => {
+        layout.value.showAlert = { error: true, message: err.message }
+    })
+}
 
 </script>
 
@@ -15,7 +34,7 @@ const State = ref({
 <template>
     <div class="bg-white dark:bg-gray-900 shadow-lg shadow-gray-200  dark:shadow-gray-700 rounded-2xl p-4 mb-6">
         <h3 class="mb-4 text-xl font-bold dark:text-gray-100">Password information</h3>
-        <UForm :schema="ChnagePasswordValidationSchema" :state="State">
+        <UForm :schema="ChnagePasswordValidationSchema" :state="State" @submit="CHANGE">
             <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
 
@@ -64,7 +83,7 @@ const State = ref({
                     </ul>
                 </div>
                 <div class="col-span-6 sm:col-full">
-                    <UButton type="submit" size="md" class="px-8">Change Password</UButton>
+                    <UButton :loading="loading" type="submit" size="md" class="px-8">Change Password</UButton>
                 </div>
             </div>
         </UForm>

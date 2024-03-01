@@ -1,5 +1,5 @@
 export default function () {
-  return useState("data", () => {
+  return useState("currentUser", () => {
     return {
       
       isVerified: null,

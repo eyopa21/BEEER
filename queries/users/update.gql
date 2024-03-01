@@ -29,3 +29,16 @@ mutation update_profile_detail(
     id
   }
 }
+
+mutation update_social_links_query(
+  $id: uuid!
+  $name: social_medias_enum_enum!
+  $link: String!
+) {
+  update_social_links_by_pk(
+    pk_columns: { id: $id }
+    _set: { name: $name, link: $link }
+  ) {
+    id
+  }
+}
