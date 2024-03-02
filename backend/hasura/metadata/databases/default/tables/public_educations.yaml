@@ -1,0 +1,78 @@
+table:
+  name: educations
+  schema: public
+insert_permissions:
+  - role: author
+    permission:
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - end_date
+        - start_date
+        - image
+        - location
+        - school
+        - title
+        - created_at
+        - updated_at
+        - author_id
+        - id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - author_id
+        - created_at
+        - end_date
+        - id
+        - image
+        - location
+        - school
+        - start_date
+        - title
+        - updated_at
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - author_id
+        - created_at
+        - end_date
+        - id
+        - image
+        - location
+        - school
+        - start_date
+        - title
+        - updated_at
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - created_at
+        - end_date
+        - image
+        - location
+        - school
+        - start_date
+        - title
+        - updated_at
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: author
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

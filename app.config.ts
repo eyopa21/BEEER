@@ -12,6 +12,9 @@ export default defineAppConfig({
                 color: 'text-red-500'
             }
         },
+        modal: {
+            container: ''
+        },
         selectMenu: {
             trigger: 'h-12 ',
             option: {

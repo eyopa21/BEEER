@@ -66,3 +66,59 @@ mutation update_certificates_query(
     id
   }
 }
+
+mutation update_project_query(
+  $id: uuid!
+  $image: String!
+  $title: String!
+  $subtitle: String!
+  $description: String!
+  $start_date: date!
+  $end_date: date!
+  $location: String
+  $client: String
+  $link: String
+  $skills: [String!]
+) {
+  update_projects_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      image: $image
+      title: $title
+      subtitle: $subtitle
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+      location: $location
+      client: $client
+      link: $link
+      skills: $skills
+    }
+  ) {
+    id
+  }
+}
+
+mutation update_education_query(
+  $id: uuid!
+  $end_date: date!
+  $start_date: date!
+  $location: String!
+  $school: String!
+  $title: String!
+  $image: String!
+) {
+  insert_educations_one(
+    pk_columns: { id: $id }
+    _set: {
+      end_date: $end_date
+      start_date: $start_date
+      location: $location
+      school: $school
+      title: $title
+      image: $image
+    }
+  ) {
+    id
+  }
+}

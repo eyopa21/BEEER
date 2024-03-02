@@ -50,3 +50,37 @@ query get_certificates_query($author_id: uuid!) {
     updated_at
   }
 }
+
+query get_projects_query($author_id: uuid!) {
+  projects(where: { author_id: { _eq: $author_id } }) {
+    skills
+    end_date
+    start_date
+    client
+    description
+    image
+    link
+    location
+    subtitle
+    title
+    created_at
+    updated_at
+    author_id
+    id
+  }
+}
+
+query get_educations_query($author_id: uuid!) {
+  educations(where: { author_id: { _eq: $author_id } }) {
+    id
+    image
+    author_id
+    title
+    school
+    location
+    start_date
+    end_date
+    created_at
+    updated_at
+  }
+}

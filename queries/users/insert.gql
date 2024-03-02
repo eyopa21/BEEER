@@ -30,15 +30,62 @@ mutation InsertCertificates_query(
       author_id: $author_id
     }
   ) {
-    end_date
-    start_date
-    description
-    image
-    location
-    title
-    created_at
-    updated_at
-    author_id
+    id
+  }
+}
+
+mutation InsertProjects_query(
+  $author_id: uuid!
+  $image: String!
+  $title: String!
+  $subtitle: String!
+  $description: String!
+  $start_date: date!
+  $end_date: date!
+  $location: String
+  $client: String
+  $link: String
+  $skills: [String!]
+) {
+  insert_projects_one(
+    object: {
+      author_id: $author_id
+      image: $image
+      title: $title
+      subtitle: $subtitle
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+      location: $location
+      client: $client
+      link: $link
+      skills: $skills
+    }
+  ) {
+    id
+  }
+}
+
+mutation InsertEducations_query(
+  $end_date: date!
+  $start_date: date!
+  $location: String!
+  $school: String!
+  $title: String!
+  $image: String!
+  $author_id: uuid!
+) {
+  insert_educations_one(
+    object: {
+      end_date: $end_date
+      start_date: $start_date
+      location: $location
+      school: $school
+      title: $title
+      image: $image
+      author_id: $author_id
+    }
+  ) {
     id
   }
 }

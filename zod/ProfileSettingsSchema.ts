@@ -42,5 +42,25 @@ export const CertificatesValidationSchema = z.object({
     end_date: z.string().min(1, 'Date is required'),
     location: z.string().min(1, 'Location is required'),
 })
+export const ProjectsValidationSchema = z.object({
+
+    title: z.string().min(1, "Title is required"),
+    subtitle: z.string().min(1, "Subtitle is required"),
+    description: z.string().min(1, 'Description is required'),
+    start_date: z.string().min(1, 'Date is required'),
+    end_date: z.string().min(1, 'Date is required'),
+    location: z.string().min(1, 'Location is required'),
+    link: z.string().min(1, 'Link is required'),
+    client: z.string().min(1, 'Client is required'),
+    skills: z.array(z.string()).min(1, 'At least one skill is required'),
+})
 
 
+export const EducationsValidationSchema = z.object({
+
+    title: z.string().min(1, "Title is required"),
+    school: z.string().min(1, 'School name is required'),
+    start_date: z.string().min(1, 'Date is required'),
+    end_date: z.string().min(1, 'Date is required'),
+    location: z.string().min(1, 'Location is required'),
+})

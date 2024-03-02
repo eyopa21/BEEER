@@ -202,8 +202,14 @@ const ADDorUPDATE = () => {
                     ring: '',
                     divide: 'divide-y divide-gray-100 dark:divide-gray-800',
                 }">
-                    <template #header> Add new certification </template>
+                    <template #header>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                                {{ toBeEdited ? 'Update certification' : 'Add new Certification' }}
+                            </h3>
 
+                        </div>
+                    </template>
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
 
@@ -271,7 +277,9 @@ const ADDorUPDATE = () => {
 
                     <template #footer>
                         <div class="flex justify-end">
-                            <UButton :loading="uploadLoading || addLoading || updateLoading" size="xl" type="submit"> Update
+                            <UButton :loading="uploadLoading || addLoading || updateLoading" size="xl" type="submit">
+                                {{ toBeEdited ? 'Update ' : 'Insert' }}
+
                             </UButton>
                         </div>
                     </template>

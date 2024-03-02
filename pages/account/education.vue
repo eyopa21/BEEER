@@ -1,18 +1,18 @@
 <script setup>
 definePageMeta({ layout: ['account'] })
 
-import { CertificatesValidationSchema } from '../../zod/ProfileSettingsSchema'
-import { get_certificates_query } from '../../queries/users/get.gql'
-import { InsertCertificates_query } from '../../queries/users/insert.gql'
-import { update_certificates_query } from '../../queries/users/update.gql'
-import { delete_certificates_query } from '../../queries/users/delete.gql'
+import { EducationsValidationSchema } from '../../zod/ProfileSettingsSchema'
+import { get_educations_query } from '../../queries/users/get.gql'
+import { InsertEducations_query } from '../../queries/users/insert.gql'
+import { update_education_query } from '../../queries/users/update.gql'
+import { delete_educations_query } from '../../queries/users/delete.gql'
 import { upload_image_query } from '../../queries/others.gql'
 
 const UID = useCookie('UID')
-const { onResult, onError, loading, refetch } = useQuery(get_certificates_query, { author_id: UID.value })
-const { mutate: UpdateCertificates, onDone: onUpdateDone, onError: onUpdateError, loading: updateLoading } = useMutation(update_certificates_query)
-const { mutate: AddCertificates, onDone: onAddDone, onError: onAddError, loading: addLoading } = useMutation(InsertCertificates_query)
-const { mutate: DeleteCertificates, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_certificates_query)
+const { onResult, onError, loading, refetch } = useQuery(get_educations_query, { author_id: UID.value })
+const { mutate: UpdateEducation, onDone: onUpdateDone, onError: onUpdateError, loading: updateLoading } = useMutation(update_education_query)
+const { mutate: AddEducation, onDone: onAddDone, onError: onAddError, loading: addLoading } = useMutation(InsertEducations_query)
+const { mutate: DeleteEducation, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_educations_query)
 const { mutate: UploadImage, onDone: onUploadDone, onError: onUploadError, loading: uploadLoading } = useMutation(upload_image_query)
 
 
@@ -20,12 +20,12 @@ const { mutate: UploadImage, onDone: onUploadDone, onError: onUploadError, loadi
 const isOpen = ref(false)
 const layout = useLayout();
 const toast = useToast();
-const certificates = ref([])
+const educations = ref([])
 
 const State = ref({
     base64: '',
     title: '',
-    description: '',
+    school: '',
     start_date: '',
     end_date: '',
     location: ''
@@ -45,19 +45,19 @@ const items = (row) => [
         icon: 'i-heroicons-trash-20-solid',
         click: () => {
             toast.add({
-                id: 'deletecertificates',
+                id: 'deleteeducation',
                 title: 'Are you sure',
                 color: 'red',
                 timeout: 0,
                 actions: [{
                     label: 'Yes',
                     click: () => {
-                        DeleteCertificates({ id: row.id })
+                        DeleteEducation({ id: row.id })
                         onDeleteDone(async res => {
                             refetch();
                             toast.add({
-                                id: 'deletecertificatessucesss',
-                                title: 'Certificate deleted successfully',
+                                id: 'deleteeducationsucesss',
+                                title: 'Education deleted successfully',
                                 icon: 'i-heroicons-exclamation-triangle',
                                 color: 'green',
                                 timeout: 5000
@@ -65,7 +65,7 @@ const items = (row) => [
                         })
                         onDeleteError(err => {
                             toast.add({
-                                id: 'deletecertificateserror',
+                                id: 'deleteeducationerror',
                                 title: err.message,
                                 description: 'Please, try again',
                                 icon: 'i-heroicons-exclamation-triangle',
@@ -88,11 +88,11 @@ const items = (row) => [
 const q = ref('')
 const filteredRows = computed(() => {
     if (!q.value) {
-        return certificates.value
+        return educations.value
     }
 
-    return certificates.value.filter((cert) => {
-        return Object.values(cert).some((value) => {
+    return educations.value.filter((edu) => {
+        return Object.values(edu).some((value) => {
             return String(value).toLowerCase().includes(q.value.toLowerCase())
         })
     })
@@ -100,8 +100,8 @@ const filteredRows = computed(() => {
 
 
 onResult(res => {
-    certificates.value = res.data?.certificates?.map((cert, key) => {
-        return { ...cert, key: key + 1 }
+    educations.value = res.data?.educations?.map((edu, key) => {
+        return { ...edu, key: key + 1 }
     })
 })
 onError(err => {
@@ -113,7 +113,7 @@ const ADDorUPDATE = () => {
         if (State.value.base64) {
             UploadImage({ base64: State.value.base64?.base64?.split(",")[1] })
             onUploadDone(res => {
-                AddCertificates({ author_id: UID.value, image: res.data.UploadImage?.url, title: State.value.title, description: State.value.description, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
+                AddEducation({ author_id: UID.value, image: res.data.UploadImage?.url, title: State.value.title, school: State.value.school, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
             })
             onUploadError(err => {
                 layout.value.showAlert = { error: true, message: err.message }
@@ -134,7 +134,7 @@ const ADDorUPDATE = () => {
         if (State.value.base64) {
             UploadImage({ base64: State.value.base64?.base64?.split(",")[1] })
             onUploadDone(res => {
-                UpdateCertificates({ id: toBeEdited.value, image: res.data.UploadImage?.url, title: State.value.title, description: State.value.description, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
+                UpdateEducation({ id: toBeEdited.value, image: res.data.UploadImage?.url, title: State.value.title, school: State.value.school, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
             })
             onUploadError(err => {
                 layout.value.showAlert = { error: true, message: err.message }
@@ -149,7 +149,7 @@ const ADDorUPDATE = () => {
                 layout.value.showAlert = { error: true, message: err.message }
             })
         } else {
-            UpdateCertificates({ id: toBeEdited.value, image: State.value.image, title: State.value.title, description: State.value.description, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
+            UpdateEducation({ id: toBeEdited.value, image: State.value.image, title: State.value.title, school: State.value.school, start_date: State.value.start_date, end_date: State.value.end_date, location: State.value.location })
             onUpdateDone(res => {
                 refetch();
                 toBeEdited.value = ""
@@ -169,10 +169,10 @@ const ADDorUPDATE = () => {
         <div class="flex justify-between mr-8">
 
             <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
-                <UInput v-model="q" placeholder="Filter certificates..." size="xl" class="w-96" />
+                <UInput v-model="q" placeholder="Search for educations..." size="xl" class="w-96" />
             </div>
             <div class="flex items-center">
-                <UButton @click="isOpen = true" size="lg">Add new Certification</UButton>
+                <UButton @click="isOpen = true" size="lg">Add new Education</UButton>
             </div>
         </div>
         <UTable :loading="loading" :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Loading...' }"
@@ -180,7 +180,7 @@ const ADDorUPDATE = () => {
             sort-desc-icon="i-heroicons-arrow-down-20-solid"
             :sort-button="{ icon: 'i-heroicons-sparkles-20-solid', color: 'primary', variant: 'outline', size: '2xs', square: false, ui: { rounded: 'rounded-full' } }"
             class="w-full"
-            :columns="[{ key: 'key' }, { key: 'title', label: 'Title', sortable: true }, { key: 'description', label: 'Description', sortable: true }, { key: 'location', label: 'Location', sortable: true }, { key: 'actions' }]"
+            :columns="[{ key: 'key' }, { key: 'title', label: 'Title', sortable: true }, { key: 'school', label: 'School name', sortable: true }, { key: 'location', label: 'Location', sortable: true }, { key: 'actions' }]"
             :rows="filteredRows">
             <template #name-data="{ row }">
                 {{ row.name }}
@@ -196,35 +196,41 @@ const ADDorUPDATE = () => {
         <UModal v-model="isOpen" class="px-32" @close="toBeEdited = ''; State = {}"
             :prevent-close="uploadLoading || addLoading || updateLoading">
 
-            <UForm :schema="CertificatesValidationSchema" :state="State" @submit="ADDorUPDATE">
+            <UForm :schema="EducationsValidationSchema" :state="State" @submit="ADDorUPDATE">
 
                 <UCard :ui="{
                     ring: '',
                     divide: 'divide-y divide-gray-100 dark:divide-gray-800',
                 }">
-                    <template #header> Add new certification </template>
+                    <template #header>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                                {{ toBeEdited ? 'Update education' : 'Add new Education' }}
+                            </h3>
+
+                        </div>
+                    </template>
 
                     <div class="grid grid-cols-6 gap-6">
-                        <div class="col-span-6 sm:col-span-3">
+                        <div class="col-span-full">
 
-                            <UFormGroup name="title" v-slot="{ error }" label="Certification title"
-                                :eager-validation="true">
-                                <UInput v-model="State.title" type="text" placeholder="The title here ..." size="lg"
+                            <UFormGroup name="school" v-slot="{ error }" label="School name" :eager-validation="true">
+                                <UInput v-model="State.school" type="text" placeholder="The school name here ..." size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
-                        <div class="col-span-6 sm:col-span-3">
+                        <div class="col-span-full">
 
-                            <UFormGroup name="description" v-slot="{ error }" label="Certification description"
-                                :eager-validation="true">
-                                <UInput v-model="State.description" type="text" placeholder="The description here ..."
+                            <UFormGroup name="title" v-slot="{ error }" label="Education type" :eager-validation="true">
+                                <UInput v-model="State.title" type="text" placeholder="The education type here ..."
                                     size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
+
                         <div class="col-span-6 sm:col-span-3">
 
-                            <UFormGroup name="start_date" v-slot="{ error }" label="Certification start date"
+                            <UFormGroup name="start_date" v-slot="{ error }" label="Education start date"
                                 :eager-validation="true">
                                 <UInput v-model="State.start_date" type="date" placeholder="Start date" size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
@@ -232,17 +238,16 @@ const ADDorUPDATE = () => {
                         </div>
                         <div class="col-span-6 sm:col-span-3">
 
-                            <UFormGroup name="end_date" v-slot="{ error }" label="Certification end date"
+                            <UFormGroup name="end_date" v-slot="{ error }" label="Education end date"
                                 :eager-validation="true">
                                 <UInput v-model="State.end_date" type="date" placeholder="End date" size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
-                        <div class="col-span-6 sm:col-span-3">
+                        <div class="col-span-full">
 
                             <UFormGroup name="location" v-slot="{ error }" label="Location" :eager-validation="true">
-                                <UInput v-model="State.location" type="text" placeholder="Certification location..."
-                                    size="lg"
+                                <UInput v-model="State.location" type="text" placeholder="Education location..." size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
@@ -255,7 +260,8 @@ const ADDorUPDATE = () => {
 
                     <template #footer>
                         <div class="flex justify-end">
-                            <UButton :loading="uploadLoading || addLoading || updateLoading" size="xl" type="submit"> Update
+                            <UButton :loading="uploadLoading || addLoading || updateLoading" size="xl" type="submit">
+                                {{ toBeEdited ? 'Update ' : 'Insert' }}
                             </UButton>
                         </div>
                     </template>
