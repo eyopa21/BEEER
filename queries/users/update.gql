@@ -42,3 +42,27 @@ mutation update_social_links_query(
     id
   }
 }
+
+mutation update_certificates_query(
+  $id: uuid!
+  $end_date: date!
+  $start_date: date!
+  $description: String!
+  $image: String!
+  $location: String!
+  $title: String
+) {
+  update_certificates_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      end_date: $end_date
+      start_date: $start_date
+      description: $description
+      image: $image
+      location: $location
+      title: $title
+    }
+  ) {
+    id
+  }
+}

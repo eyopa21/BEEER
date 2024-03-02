@@ -15,14 +15,10 @@ const items = [
         label: 'Dashboard',
         icon: 'i-heroicons-adjustments-horizontal-20-solid',
         click: () => {
-            router.push(`/account/settings-${UID.value}`)
+            router.push(`/account/settings`)
         }
 
     }], [{
-        label: 'Archive',
-        icon: 'i-heroicons-archive-box-20-solid',
-
-    }, {
         label: 'Contribute',
         icon: 'i-heroicons-arrow-right-circle-20-solid'
     }], [{

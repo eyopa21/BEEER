@@ -1,6 +1,24 @@
 table:
   name: certificates
   schema: public
+insert_permissions:
+  - role: author
+    permission:
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - end_date
+        - start_date
+        - description
+        - image
+        - location
+        - title
+        - created_at
+        - updated_at
+        - author_id
+        - id
+    comment: ""
 select_permissions:
   - role: anonymous
     permission:
@@ -31,4 +49,30 @@ select_permissions:
         - author_id
         - id
       filter: {}
+    comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - created_at
+        - description
+        - end_date
+        - image
+        - location
+        - start_date
+        - title
+        - updated_at
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: author
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
     comment: ""

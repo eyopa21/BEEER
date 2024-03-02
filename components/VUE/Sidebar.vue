@@ -47,23 +47,23 @@ const shrink = ref(false)
 const props = defineProps(['class'])
 const navs = ref([{
     name: 'Dashboard',
-    to: '/account/settings-12',
+    to: '/account/settings',
     icon: 'heroicons:adjustments-horizontal-20-solid'
 },
 
 {
     name: 'Projects',
-    to: '/account/projects-12',
+    to: '/account/projects',
     icon: 'heroicons-solid:briefcase'
 },
 {
     name: 'Education',
-    to: '/account/education-12',
+    to: '/account/education',
     icon: 'heroicons:code-bracket-20-solid'
 },
 {
     name: 'Certificates',
-    to: '/account/certificates-12',
+    to: '/account/certificates',
     icon: 'heroicons:newspaper-20-solid'
 },
 

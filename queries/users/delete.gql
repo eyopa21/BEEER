@@ -3,3 +3,9 @@ mutation delete_social_links_query($id: uuid!) {
     id
   }
 }
+
+mutation delete_certificates_query($id: uuid!) {
+  delete_certificates_by_pk(id: $id) {
+    id
+  }
+}

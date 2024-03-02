@@ -1,0 +1,5 @@
+mutation upload_image_query($base64: String!) {
+  UploadImage(arg1: { base64: $base64 }) {
+    url
+  }
+}

@@ -34,14 +34,6 @@ const DELETE = (id) => {
             click: () => {
                 DeleteSocialLink({ id: id })
                 onDeleteDone(async res => {
-                    try {
-                        const res = await myAuth()
-                        console.log("tokichaw", res)
-
-                    } catch (err) {
-                        console.log("tokierror", err)
-
-                    }
 
                     toast.add({
                         id: 'deletesociallinksucesss',

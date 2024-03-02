@@ -6,6 +6,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 
+
+
+
 const client = new GraphQLClient(process.env.HASURA_URI, {
     headers: {
         "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET,
@@ -23,9 +26,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 const auth = require('./routes/auth')
-
-
+const image = require('./routes/image')
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/image', image);
+
 
 
 

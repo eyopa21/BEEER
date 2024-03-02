@@ -15,6 +15,7 @@ function onFileChange(event) {
     file.value = event.target.files[0]
     base64.value = useBase64(file.value)
     emit('onbase64', base64.value)
+    console.log(base64.value)
 }
 const { isLoading } = useImage({ src: url })
 </script>
@@ -24,6 +25,7 @@ const { isLoading } = useImage({ src: url })
         <div class=" w-full h-20 relative">
             <div class="w-20 h-20  bg-white rounded-3xl border border-neutral-400">
                 <div>
+
                     <span v-if="isLoading">Loading</span>
                     <img v-else :src="url ? url : props.image" class="w-20 h-20 p-1 rounded-3xl">
                 </div>

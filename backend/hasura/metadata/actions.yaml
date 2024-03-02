@@ -11,6 +11,12 @@ actions:
       handler: http://host.docker.internal:4002/api/v1/auth/author/signup
     permissions:
       - role: anonymous
+  - name: UploadImage
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4002/api/v1/image/upload
+    permissions:
+      - role: author
   - name: Verify
     definition:
       kind: synchronous
@@ -19,9 +25,11 @@ actions:
       - role: author
 custom_types:
   enums: []
-  input_objects: []
+  input_objects:
+    - name: UploadImageInput
   objects:
     - name: SignUpOutput
     - name: verifyOutput
     - name: ChangePasswordOutput
+    - name: UploadImageOutput
   scalars: []

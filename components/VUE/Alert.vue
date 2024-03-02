@@ -4,7 +4,9 @@ const layout = useLayout();
 if (layout.value.showAlert.message === 'Uniqueness violation. duplicate key value violates unique constraint "author_unique_social_links_constraint"' || layout.value.showAlert.message === 'Duplicated attribute') {
     layout.value.showAlert.message = 'Duplicated attribute'
 }
-
+if (layout.value.showAlert.message === 'Uniqueness violation. duplicate key value violates unique constraint "author_unique_certificates_constraint"') {
+    layout.value.showAlert.message = 'Duplicated attribute'
+}
 </script>
 
 

@@ -15,10 +15,20 @@ type Mutation {
 }
 
 type Mutation {
+  UploadImage(
+    arg1: UploadImageInput!
+  ): UploadImageOutput
+}
+
+type Mutation {
   Verify(
     id: uuid!
     code: String!
   ): verifyOutput
+}
+
+input UploadImageInput {
+  base64: String!
 }
 
 type SignUpOutput {
@@ -34,5 +44,9 @@ type verifyOutput {
 
 type ChangePasswordOutput {
   id: uuid!
+}
+
+type UploadImageOutput {
+  url: String!
 }
 

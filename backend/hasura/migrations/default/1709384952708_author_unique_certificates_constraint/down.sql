@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- ALTER TABLE certificates
+-- ADD CONSTRAINT author_unique_certificates_constraint UNIQUE (author_id, title);
