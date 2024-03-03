@@ -1,6 +1,12 @@
 <script setup>
 import { BlogValidationSchema } from '../../../zod/BlogSchema'
+import { InsertBlogs_query } from '../../../queries/blogs/insert.gql'
+import { upload_image_query } from '../../../queries/others.gql'
+const { mutate: AddBlog, onDone: onAddDone, onError: onAddError, loading: addLoading } = useMutation(InsertBlogs_query)
+const { mutate: UploadImage, onDone: onUploadDone, onError: onUploadError, loading: uploadLoading } = useMutation(upload_image_query)
 
+const UID = useCookie('UID')
+const layout = useLayout();
 const State = ref({
     image: '',
     title: '',
@@ -10,19 +16,39 @@ const State = ref({
     tags: []
 })
 
+const POST = () => {
+    if (State.value.image) {
+        UploadImage({ base64: State.value.image?.base64?.split(",")[1] })
+        onUploadDone(res => [
+            AddBlog({ author_id: UID.value, image: res.data.UploadImage?.url, title: State.value.title, subtitle: State.value.subtitle, description: State.value.description, category: State.value.category, tags: State.value.tags })
+        ])
+        onUploadError(err => {
+            layout.value.showAlert = { error: true, message: err.message }
+        })
+        onAddDone(res => {
+            State.value = {}
+        })
+        onAddError(err => {
+            layout.value.showAlert = { error: true, message: err.message }
+        })
+    } else {
+        layout.value.showAlert = { error: true, message: 'Please, select image first' }
+    }
+}
+
 </script>
 
 
 <template>
     <div class="p-8 mb-64 pb-64">
-
+        {{ }}
         <div class="w-full h-screen  bg-white dark:bg-black rounded-lg">
             <div class="p-4 text-zinc-700 text-xl font-medium  leading-loose">
                 Blog post form</div>
             <div class="pl-16 w-full">
-                <VUEImage />
+                <VUEImage @onbase64="(n) => State.image = n" />
             </div>
-            <UForm :schema="BlogValidationSchema" :state="State" class="px-16">
+            <UForm :schema="BlogValidationSchema" :state="State" class="px-16" @submit="POST">
                 <div class="grid grid-cols-2 p-8  gap-4">
                     <div class="flex flex-col pl-4 pt-4 w-full pr-2 space-y-4 ">
                         <UFormGroup name="title" :eager-validation="true">
@@ -64,7 +90,7 @@ const State = ref({
                             <div class="flex flex-row justify-start items-center gap-14 ">
                                 <label for="tags" class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Tags
                                 </label>
-                                <USelectMenu v-model="State.tags" name="category"
+                                <USelectMenu v-model="State.tags" name="category" :multiple="true"
                                     selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" placeholder="Select tags"
                                     :options="['Structural', 'Finishing']" />
                             </div>
@@ -83,7 +109,7 @@ const State = ref({
                 </div>
                 <div class="flex justify-end gap-4">
                     <UButton to="/account/blogs" size="lg" color="primary" variant="outline">Discard</UButton>
-                    <UButton type="submit" size="lg" color="primary">Post Blog
+                    <UButton :loading="uploadLoading || addLoading" type="submit" size="lg" color="primary">Post Blog
                     </UButton>
                 </div>
             </UForm>

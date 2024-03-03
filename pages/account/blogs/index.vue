@@ -2,14 +2,11 @@
 definePageMeta({ layout: ['account'] })
 
 
-import { get_blogs_query } from '../../../queries/users/get.gql'
+import { get_blogs_query } from '../../../queries/blogs/get.gql'
 
 
 const UID = useCookie('UID')
 const { onResult, onError, loading, refetch } = useQuery(get_blogs_query, { author_id: UID.value })
-
-
-
 
 const layout = useLayout();
 const blogs = ref([])
@@ -56,7 +53,7 @@ onError(err => {
                 <UInput v-model="q" placeholder="Filter certificates..." size="xl" class="w-96" />
             </div>
             <div class="flex items-center">
-                <UButton @click="isOpen = true" size="lg">Post Blog</UButton>
+                <UButton to="/account/blogs/new" size="lg">Post Blog</UButton>
             </div>
         </div>
         <UTable :loading="loading" :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Loading...' }"

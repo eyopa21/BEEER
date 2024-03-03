@@ -1,0 +1,23 @@
+mutation InsertBlogs_query(
+  $category: String!
+  $description: String!
+  $image: String!
+  $subtitle: String!
+  $title: String!
+  $author_id: uuid!
+  $tags: [String!]
+) {
+  insert_blogs_one(
+    object: {
+      category: $category
+      description: $description
+      image: $image
+      subtitle: $subtitle
+      title: $title
+      author_id: $author_id
+      tags: $tags
+    }
+  ) {
+    id
+  }
+}
