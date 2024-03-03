@@ -1,0 +1,5 @@
+mutation delete_blogs_query($id: uuid!) {
+  delete_blogs_by_pk(id: $id) {
+    id
+  }
+}

@@ -3,22 +3,68 @@ definePageMeta({ layout: ['account'] })
 
 
 import { get_blogs_query } from '../../../queries/blogs/get.gql'
+import { delete_blogs_query } from '../../queries/blogs/delete.gql'
+const { mutate: DeleteBlog, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_blogs_query)
 
 
 const UID = useCookie('UID')
 const { onResult, onError, loading, refetch } = useQuery(get_blogs_query, { author_id: UID.value })
-
+const router = useRouter();
 const layout = useLayout();
+const toast = useToast();
 const blogs = ref([])
 
 const items = (row) => [
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
+        click: () => {
+            router.push(`/account/blogs/edit-${row.id}`)
+        }
 
     }], [{
         label: 'Delete',
         icon: 'i-heroicons-trash-20-solid',
+        click: () => {
+            toast.add({
+                id: 'deleteblogs',
+                title: 'Are you sure',
+                color: 'red',
+                timeout: 0,
+                actions: [{
+                    label: 'Yes',
+                    click: () => {
+                        DeleteBlog({ id: row.id })
+                        onDeleteDone(async res => {
+                            refetch();
+                            toast.add({
+                                id: 'deleteblogssucesss',
+                                title: 'Blog deleted successfully',
+                                icon: 'i-heroicons-exclamation-triangle',
+                                color: 'green',
+                                timeout: 5000
+                            })
+                        })
+                        onDeleteError(err => {
+                            toast.add({
+                                id: 'deleteblogerror',
+                                title: err.message,
+                                description: 'Please, try again',
+                                icon: 'i-heroicons-exclamation-triangle',
+                                color: 'red',
+                                timeout: 5000
+                            })
+                        })
+                    },
+                    loading: deleteLoading.value
+                }, {
+                    label: 'No',
+                    click: () => toast.remove()
+                }]
+            })
+
+        }
+
     }]
 ]
 const q = ref('')

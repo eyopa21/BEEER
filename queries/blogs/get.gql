@@ -12,3 +12,20 @@ query get_blogs_query($author_id: uuid!) {
     tags
   }
 }
+
+query get_single_blog_query($author_id: uuid!, $id: uuid!) {
+  blogs(
+    where: { _and: [{ author_id: { _eq: $author_id }, id: { _eq: $id } }] }
+  ) {
+    id
+    author_id
+    title
+    subtitle
+    description
+    image
+    category
+    created_at
+    updated_at
+    tags
+  }
+}

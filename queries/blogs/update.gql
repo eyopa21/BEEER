@@ -1,0 +1,23 @@
+mutation update_blogs_query(
+  $id: uuid!
+  $category: String!
+  $description: String!
+  $image: String!
+  $subtitle: String!
+  $title: String!
+  $tags: [String!]
+) {
+  update_blogs_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      category: $category
+      description: $description
+      image: $image
+      subtitle: $subtitle
+      title: $title
+      tags: $tags
+    }
+  ) {
+    id
+  }
+}

@@ -50,3 +50,29 @@ select_permissions:
         - id
       filter: {}
     comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - category
+        - created_at
+        - description
+        - image
+        - subtitle
+        - tags
+        - title
+        - updated_at
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: author
+    permission:
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

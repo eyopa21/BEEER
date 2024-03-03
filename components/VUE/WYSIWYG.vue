@@ -19,6 +19,9 @@ const isDark = computed({
     }
 })
 const emit = defineEmits(['change'])
-
-const text = ref('# Welcome to my blog');
+const props = defineProps(['data'])
+//const text = ref(props.data || '# Welcome to my blog');
+const text = ref(computed(() => {
+    return props.data ? props.data : '# Welcome to my blog'
+}))
 </script>

@@ -108,7 +108,7 @@ mutation update_education_query(
   $title: String!
   $image: String!
 ) {
-  insert_educations_one(
+  update_educations_by_pk(
     pk_columns: { id: $id }
     _set: {
       end_date: $end_date
