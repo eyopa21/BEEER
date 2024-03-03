@@ -25,7 +25,7 @@
                                 }}
                                 </span>
                             </NuxtLink>
-                            <hr v-if="key == 0 || key == 6"
+                            <hr v-if="key == 0 || key == 3"
                                 class="border-0 mt-2 h-px last:mb-2 bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100">
                         </li>
 
@@ -64,6 +64,12 @@ const navs = ref([{
 {
     name: 'Certificates',
     to: '/account/certificates',
+    icon: 'heroicons:newspaper-20-solid'
+},
+
+{
+    name: 'Blogs',
+    to: '/account/blogs',
     icon: 'heroicons:newspaper-20-solid'
 },
 

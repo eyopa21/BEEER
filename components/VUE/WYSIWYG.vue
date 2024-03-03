@@ -1,12 +1,24 @@
 <template>
-    <MdEditor v-model="text" />
+    <div class="w-full">
+
+        <MdEditor v-model="text" @change="emit('change', text)" :theme="isDark ? 'dark' : 'light'" language="en-US" />
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+const colorMode = useColorMode()
+const isDark = computed({
+    get() {
+        return colorMode.value === 'dark'
+    },
+    set() {
+        colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+    }
+})
+const emit = defineEmits(['change'])
 
-const text = ref('Hello Editor!');
-
+const text = ref('# Welcome to my blog');
 </script>

@@ -8,9 +8,9 @@
                 </h1>
             </div>
 
-            <div class="col-span-full xl:col-auto">
-
-                <SettingsProfilePicture class="sticky top-0" />
+            <div class="col-span-full ">
+                <SettingsProfile />
+                <SettingsProfilePicture />
             </div>
             <div class=" col-span-full ">
 

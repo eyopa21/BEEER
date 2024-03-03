@@ -1,0 +1,14 @@
+query get_blogs_query($author_id: uuid!) {
+  blogs(where: { author_id: { _eq: $author_id } }) {
+    id
+    author_id
+    title
+    subtitle
+    description
+    image
+    category
+    created_at
+    updated_at
+    tags
+  }
+}
