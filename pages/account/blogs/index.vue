@@ -1,9 +1,8 @@
 <script setup>
 definePageMeta({ layout: ['account'] })
 
-
 import { get_blogs_query } from '../../../queries/blogs/get.gql'
-import { delete_blogs_query } from '../../queries/blogs/delete.gql'
+import { delete_blogs_query } from '../../../queries/blogs/delete.gql'
 const { mutate: DeleteBlog, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_blogs_query)
 
 
