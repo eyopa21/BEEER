@@ -1,6 +1,31 @@
 table:
   name: blogs
   schema: public
+object_relationships:
+  - name: author
+    using:
+      manual_configuration:
+        column_mapping:
+          author_id: id
+        insertion_order: null
+        remote_table:
+          name: authors
+          schema: public
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: blog_id
+        table:
+          name: comments
+          schema: public
+  - name: likes
+    using:
+      foreign_key_constraint_on:
+        column: blog_id
+        table:
+          name: likes
+          schema: public
 insert_permissions:
   - role: author
     permission:

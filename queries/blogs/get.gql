@@ -1,4 +1,4 @@
-query get_blogs_query($author_id: uuid!) {
+query get__my_blogs_query($author_id: uuid!) {
   blogs(where: { author_id: { _eq: $author_id } }) {
     id
     author_id
@@ -27,5 +27,97 @@ query get_single_blog_query($author_id: uuid!, $id: uuid!) {
     created_at
     updated_at
     tags
+  }
+}
+
+query GetBlogs {
+  blogs(order_by: { updated_at: desc }) {
+    tags
+    category
+    description
+    image
+    subtitle
+    title
+    created_at
+    updated_at
+    author_id
+    id
+    author {
+      email
+      beeer_name
+    }
+  }
+}
+
+query GetSingleBlogs($id: uuid!) {
+  blogs(where: { id: { _eq: $id } }) {
+    tags
+    category
+    description
+    image
+    subtitle
+    title
+    created_at
+    updated_at
+    author_id
+    id
+    author {
+      email
+      beeer_name
+      profile_detail {
+        first_name
+        last_name
+        phone_number
+        website
+        profile_picture
+      }
+      social_links {
+        id
+        link
+        enum {
+          icon
+          name
+        }
+      }
+    }
+    likes_aggregate {
+      aggregate {
+        count
+      }
+    }
+    likes {
+      liker {
+        id
+      }
+    }
+    comments {
+      id
+      comment
+      created_at
+      updated_at
+      author {
+        beeer_name
+        profile_detail {
+          profile_picture
+          first_name
+          last_name
+        }
+      }
+      replies {
+        id
+        reply
+        created_at
+        updated_at
+        author {
+          id
+          beeer_name
+          profile_detail {
+            first_name
+            last_name
+            profile_picture
+          }
+        }
+      }
+    }
   }
 }

@@ -1,0 +1,71 @@
+table:
+  name: comments
+  schema: public
+object_relationships:
+  - name: author
+    using:
+      foreign_key_constraint_on: commentor_id
+array_relationships:
+  - name: replies
+    using:
+      foreign_key_constraint_on:
+        column: comment_id
+        table:
+          name: replies
+          schema: public
+insert_permissions:
+  - role: author
+    permission:
+      check:
+        commentor_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - comment
+        - created_at
+        - updated_at
+        - blog_id
+        - commentor_id
+        - id
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - comment
+        - created_at
+        - updated_at
+        - blog_id
+        - commentor_id
+        - id
+      filter: {}
+    comment: ""
+  - role: author
+    permission:
+      columns:
+        - comment
+        - created_at
+        - updated_at
+        - blog_id
+        - commentor_id
+        - id
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: author
+    permission:
+      columns:
+        - comment
+      filter:
+        commentor_id:
+          _eq: X-Hasura-User-Id
+      check:
+        commentor_id:
+          _eq: X-Hasura-User-Id
+    comment: ""
+delete_permissions:
+  - role: author
+    permission:
+      filter:
+        commentor_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

@@ -1,0 +1,17 @@
+mutation like_query($blog_id: uuid!, $liker_id: uuid!) {
+  insert_likes_one(
+    object: { blog_id: $blog_id, liker_id: $liker_id, type: "like" }
+  ) {
+    id
+  }
+}
+
+mutation unlike_query($blog_id: uuid!, $liker_id: uuid!) {
+  delete_likes(
+    where: { blog_id: { _eq: $blog_id }, liker_id: { _eq: $liker_id } }
+  ) {
+    returning {
+      id
+    }
+  }
+}

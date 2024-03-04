@@ -53,7 +53,8 @@ const POST = () => {
                     <div class="flex flex-col pl-4 pt-4 w-full pr-2 space-y-4 ">
                         <UFormGroup name="title" :eager-validation="true">
                             <div class="flex flex-row justify-start items-center gap-14 ">
-                                <label for="title" class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Title
+                                <label for="title"
+                                    class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Title
                                 </label>
                                 <UInput v-model="State.title" size="xl" id="title" placeholder="Blog title" type="text"
                                     class="  w-full " />
@@ -91,8 +92,8 @@ const POST = () => {
                                 <label for="tags" class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Tags
                                 </label>
                                 <USelectMenu v-model="State.tags" name="category" :multiple="true"
-                                    selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" placeholder="Select tags"
-                                    :options="['Structural', 'Finishing']" />
+                                    selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full"
+                                    placeholder="Select tags" :options="['Structural', 'Finishing']" />
                             </div>
                         </UFormGroup>
 

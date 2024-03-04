@@ -1,7 +1,8 @@
 <template>
     <div class="w-full">
 
-        <MdEditor v-model="text" @change="emit('change', text)" :theme="isDark ? 'dark' : 'light'" language="en-US" />
+        <MdEditor v-model="text" @input="emit('change', text); console.log(text)" :theme="isDark ? 'dark' : 'light'"
+            language="en-US" />
     </div>
 </template>
 
@@ -20,8 +21,8 @@ const isDark = computed({
 })
 const emit = defineEmits(['change'])
 const props = defineProps(['data'])
-//const text = ref(props.data || '# Welcome to my blog');
-const text = ref(computed(() => {
+let propData = ref(computed(() => {
     return props.data ? props.data : '# Welcome to my blog'
 }))
+const text = ref(propData.value);
 </script>

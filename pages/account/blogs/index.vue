@@ -1,13 +1,13 @@
 <script setup>
 definePageMeta({ layout: ['account'] })
 
-import { get_blogs_query } from '../../../queries/blogs/get.gql'
+import { get__my_blogs_query } from '../../../queries/blogs/get.gql'
 import { delete_blogs_query } from '../../../queries/blogs/delete.gql'
 const { mutate: DeleteBlog, onDone: onDeleteDone, onError: onDeleteError, loading: deleteLoading } = useMutation(delete_blogs_query)
 
 
 const UID = useCookie('UID')
-const { onResult, onError, loading, refetch } = useQuery(get_blogs_query, { author_id: UID.value })
+const { onResult, onError, loading, refetch } = useQuery(get__my_blogs_query, { author_id: UID.value })
 const router = useRouter();
 const layout = useLayout();
 const toast = useToast();
@@ -90,6 +90,7 @@ onError(err => {
 })
 
 </script>
+
 <template>
     <div class="w-full ml-64 px-4 mt-8">
         <div class="flex justify-between mr-8">

@@ -10,11 +10,11 @@ const { onResult, onError, loading, refetch } = useQuery(get_single_blog_query, 
 const { mutate: UpdateBlog, onDone: onUpdateDone, onError: onUpdateError, loading: updateLoading } = useMutation(update_blogs_query)
 const { mutate: UploadImage, onDone: onUploadDone, onError: onUploadError, loading: uploadLoading } = useMutation(upload_image_query)
 
-const test = ref('')
+
 const layout = useLayout();
 onResult(res => {
     State.value = { ...res.data?.blogs[0] }
-    test.value = res.data.blogs
+
 })
 onError(err => {
     layout.value.showAlert = { error: true, message: err.message }
@@ -39,7 +39,7 @@ const POST = () => {
         })
         onUpdateDone(res => {
             refetch();
-            layout.value.showAlert = { error: true, message: 'Update successfull' }
+            layout.value.showAlert = { error: false, message: 'Update successfull' }
         })
         onUpdateError(err => {
             layout.value.showAlert = { error: true, message: err.message }
@@ -49,7 +49,7 @@ const POST = () => {
 
         onUpdateDone(res => {
             refetch();
-            layout.value.showAlert = { error: true, message: 'Update successfull' }
+            layout.value.showAlert = { error: false, message: 'Update successfull' }
         })
         onUpdateError(err => {
             layout.value.showAlert = { error: true, message: err.message }
@@ -76,7 +76,8 @@ const POST = () => {
                     <div class="flex flex-col pl-4 pt-4 w-full pr-2 space-y-4 ">
                         <UFormGroup name="title" :eager-validation="true">
                             <div class="flex flex-row justify-start items-center gap-14 ">
-                                <label for="title" class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Title
+                                <label for="title"
+                                    class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Title
                                 </label>
                                 <UInput v-model="State.title" size="xl" id="title" placeholder="Blog title" type="text"
                                     class="  w-full " />
@@ -114,8 +115,8 @@ const POST = () => {
                                 <label for="tags" class="w-1/3 text-gray-600 text-base font-medium  leading-normal">Tags
                                 </label>
                                 <USelectMenu v-model="State.tags" name="category" :multiple="true"
-                                    selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full" placeholder="Select tags"
-                                    :options="['Structural', 'Finishing']" />
+                                    selected-icon="i-heroicons-hand-thumb-up-solid" class="w-full"
+                                    placeholder="Select tags" :options="['Structural', 'Finishing']" />
                             </div>
                         </UFormGroup>
 
@@ -132,7 +133,8 @@ const POST = () => {
                 </div>
                 <div class="flex justify-end gap-4">
                     <UButton to="/account/blogs" size="lg" color="primary" variant="outline">Discard</UButton>
-                    <UButton :loading="uploadLoading || updateLoading" type="submit" size="lg" color="primary">Update blog
+                    <UButton :loading="uploadLoading || updateLoading" type="submit" size="lg" color="primary">Update
+                        blog
                     </UButton>
 
                 </div>

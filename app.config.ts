@@ -1,7 +1,7 @@
 export default defineAppConfig({
 
     ui: {
-        primary: 'green',
+        primary: 'teal',
         gray: 'cool',
 
 
@@ -11,9 +11,6 @@ export default defineAppConfig({
             th: {
                 color: 'text-red-500'
             }
-        },
-        modal: {
-            container: ''
         },
         selectMenu: {
             trigger: 'h-12 ',

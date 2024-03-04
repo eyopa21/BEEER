@@ -149,11 +149,13 @@ exports.signUp = async (req, res, next) => {
 exports.verify = async (req, res, next) => {
 
   const GET_DATA = `
-  query getData($id: uuid!){
-  authors_by_pk(id: $id) {
+  query getData($id: uuid!, $code: String!) {
+  authors(where: {_and: [{id: {_eq: $id}, code: {_eq: $code}}]}) {
+    id
     email
   }
 }
+
   `
 
   const HASURA_OPERATION = `
@@ -174,13 +176,14 @@ mutation ($id: uuid!, $code: String!) {
   const { id, code } = req.body.input;
   try {
      const data = await client.request(GET_DATA, {
-          id 
+       id,
+       code
      });
     
-    if (data.authors_by_pk) {
+    if (data.authors[0]) {
     
     sendEmail(
-      data.authors_by_pk.email,
+      data.authors[0].email,
       "Thank you",
       "You are successfully verified"
     )
@@ -207,7 +210,7 @@ mutation ($id: uuid!, $code: String!) {
         return res.status(400).json({ message: "Please check your connection, and try again" });
       });
     } else {
-       return res.status(400).json({ message: "user not found" });
+       return res.status(400).json({ message: "Incorrect code" });
       }
   } catch (err) {
     console.log("ejhf", err)
