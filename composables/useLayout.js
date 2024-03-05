@@ -1,7 +1,8 @@
 export default function() {
     return useState('layout', () => {
         return {
-   
+            showMainSideBar: false,
+            showFeedsOptions: false,
             showSidebar: false,
             showCart: false,
             showSearch: false,

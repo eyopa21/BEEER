@@ -1,5 +1,6 @@
-<script setup >
+<script setup>
 const UID = useCookie('UID')
+const layout = useLayout();
 const colorMode = useColorMode()
 const isDark = computed({
     get() {
@@ -10,16 +11,23 @@ const isDark = computed({
     }
 })
 </script>
+
 <template>
     <header
         class="border-b py-4 border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50 lg:!border-transparent bg-white dark:bg-gray-950">
-        <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">
+        <div
+            class="mx-auto px-4 sm:px-6 lg:px-0  max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">
+
             <div class="lg:flex-1 flex items-center gap-1.5">
+                <button @click=" layout.showMainSideBar = true" type="button"
+                    class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden">
+                    <span class="i-heroicons-bars-3-20-solid flex-shrink-0 h-5 w-5"></span>
+                </button>
                 <NuxtLink to="/"
                     class="router-link-active router-link-exact-active flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5">
                     Beeer.com
                     <span
-                        class="inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 dark:bg-primary-400 dark:bg-opacity-10 text-primary-500 dark:text-primary-400 ring-1 ring-inset ring-primary-500 dark:ring-primary-400 ring-opacity-25 dark:ring-opacity-25 mb-0.5">
+                        class="hidden sm:inline-flex items-center font-medium rounded-md text-xs px-2 py-1 bg-primary-50 dark:bg-primary-400 dark:bg-opacity-10 text-primary-500 dark:text-primary-400 ring-1 ring-inset ring-primary-500 dark:ring-primary-400 ring-opacity-25 dark:ring-opacity-25 mb-0.5">
                         For the Art</span>
                 </NuxtLink>
             </div>
@@ -61,10 +69,7 @@ const isDark = computed({
                 <div v-else>
                     <ProfileOptions />
                 </div>
-                <button type="button"
-                    class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden">
-                    <span class="i-heroicons-bars-3-20-solid flex-shrink-0 h-5 w-5"></span>
-                </button>
+
             </div>
         </div>
     </header>

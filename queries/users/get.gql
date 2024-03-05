@@ -84,3 +84,86 @@ query get_educations_query($author_id: uuid!) {
     updated_at
   }
 }
+
+query get_single_user_query($id: uuid!) {
+  authors(where: { id: { _eq: $id } }) {
+    is_deleted
+    is_suspended
+    is_verified
+    beeer_name
+    code
+    email
+    created_at
+    updated_at
+    id
+    profile_detail {
+      first_name
+      last_name
+      phone_number
+      location
+      profession
+      profile_picture
+      website
+      work_email
+      work_place
+      date_of_birth
+      bio
+      id
+    }
+    blogs {
+      id
+      image
+      title
+      subtitle
+      tags
+      description
+      created_at
+      updated_at
+    }
+    projects {
+      id
+      image
+      link
+      location
+      description
+      client
+      title
+      subtitle
+      start_date
+      end_date
+      skills
+      created_at
+      updated_at
+    }
+    educations {
+      id
+      image
+      title
+      school
+      location
+      start_date
+      end_date
+      created_at
+      updated_at
+    }
+    certificates {
+      id
+      title
+      location
+      description
+      image
+      start_date
+      end_date
+      created_at
+      updated_at
+    }
+    social_links {
+      id
+      link
+      enum {
+        icon
+        name
+      }
+    }
+  }
+}

@@ -1,7 +1,27 @@
 <script setup>
-const UID = useCookie('UID')
-const route = useRoute();
 
+const route = useRoute();
+const UID = useCookie('UID')
+import { get_single_user_query } from '../../queries/users/get.gql'
+const { onResult, onError, loading, refetch } = useQuery(get_single_user_query, { id: route.params.id })
+const { formatDate } = useHelpers();
+const profile = ref('')
+
+onResult(res => {
+    profile.value = res.data?.authors[0]
+})
+
+
+const isBlogEmpty = ref(computed(() => {
+    if (loading.value) return false
+    if (profile.value?.blogs?.length) return false
+    return true
+}))
+const noUserFound = ref(computed(() => {
+    if (loading.value) return false
+    if (profile.value !== '') return false
+    return true
+}))
 </script>
 
 <template>
@@ -10,77 +30,94 @@ const route = useRoute();
         <div class=" bg-gray-100 dark:bg-black">
 
             <div class="px-6 py-8">
-                <div class="container flex justify-between mx-auto">
-                    <div class="w-full lg:w-8/12">
+                <div v-if="loading">
+                    <VUEInnerLoading />
+                </div>
+                <div v-if="noUserFound" class="w-full mx-auto">
+                    <VUENoItemFound />
+                </div>
+                <div v-else class="container flex flex-col-reverse lg:flex-row justify-between mx-auto">
+                    <div v-if="isBlogEmpty" class="w-full lg:w-8/12">
+                        <VUENoItemFound title="No blogs yet" subtitle="This user have not posted yet" />
+                    </div>
+                    <div v-else class="w-full lg:w-8/12">
                         <div class="flex items-center justify-between">
                             <h1 class="text-xl font-bold text-gray-700 dark:text-gray-300 md:text-2xl">Posts</h1>
                             <div>
                                 <VUEFilter />
                             </div>
                         </div>
-                        <div v-for="i in 5" :key="i" class="mt-6">
+                        <div v-for="i in profile?.blogs" :key="i" class="mt-6">
                             <div
                                 class="max-w-4xl px-10 py-6 mx-auto bg-white dark:bg-black rounded-3xl shadow-sm dark:shadow-none dark:border dark:border-gray-900 border-primary shadow-primary">
-                                <div class="flex items-center justify-between"><span class="font-light text-gray-600">Jun 1,
-                                        2020</span><a href="#"
-                                        class="px-2 py-1 font-bold text-gray-100 bg-primary dark:bg-primary-800 rounded-lg">Laravel</a>
+                                <div class="flex items-center justify-between"><span class="font-light text-gray-600">
+                                        {{ formatDate(i.created_at) }} {{ i.updated_at !== i.created_at ? '(edited)' :
+                    ''
+                                        }}
+                                    </span><a href="#"
+                                        class="px-2 py-1 text-xs font-bold text-gray-100 bg-primary dark:bg-primary-800 rounded-lg">Laravel</a>
                                 </div>
                                 <div class="mt-2"><a href="#"
-                                        class="text-2xl font-bold text-gray-700 dark:text-gray-300 hover:underline">Build
-                                        Your New Idea with Laravel Freamwork.</a>
-                                    <p class="mt-2 text-gray-600">Lorem ipsum dolor sit, amet consectetur adipisicing
-                                        elit.
-                                        Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-                                        enim
-                                        reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!
+                                        class="text-2xl font-bold text-gray-700 dark:text-gray-300 hover:underline">
+                                        {{ i.title }}
+                                    </a>
+                                    <p class="mt-2 text-gray-600 prose prose-[2px]  dark:prose-invert ">
+                                        {{ i.subtitle }}
                                     </p>
                                 </div>
                                 <div class="flex items-center justify-between mt-4">
-                                    <NuxtLink to="/read/blog-1" class="text-blue-500 hover:underline">Read more</NuxtLink>
-                                    <div><a href="#" class="flex items-center"><img
-                                                src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                                                alt="avatar"
+                                    <NuxtLink :to="`/read/blog-${i.id}`" class="text-blue-500 hover:underline">Read more
+                                    </NuxtLink>
+                                    <div>
+                                        <a href="#" class="flex items-center">
+                                            <img :src="profile?.profile_detail[0]?.profile_picture"
+                                                :alt="profile.beeer_name"
                                                 class="hidden object-cover w-10 h-10 mx-4 rounded-full sm:block">
-                                            <NuxtLink to="/account/profile-2"
-                                                class="font-bold text-gray-700 hover:underline">Eyob Nigussie</NuxtLink>
-                                        </a></div>
+                                            <NuxtLink class="font-bold text-gray-700 hover:underline">
+                                                {{ profile?.profile_detail[0]?.first_name + " " +
+                    profile?.profile_detail[0]?.last_name }}</NuxtLink>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <VUEPagination />
                     </div>
-                    <div class="hidden bg-transparent dark:bg-black w-4/12 -mx-8 lg:block sticky top-32 h-full">
+                    <UDivider label="BLOGS" class="block lg:hidden my-4 lg:my-0" />
+                    <div
+                        class=" bg-transparent dark:bg-black w-full lg:w-4/12 lg:-mx-8 lg:block lg:sticky lg:top-32 h-full">
                         <div>
 
-                            <NuxtImg
-                                src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                                alt="config.public.name" class="rounded-full border border-gray-300" width="100"
+                            <NuxtImg :src="profile?.profile_detail[0]?.profile_picture || '/placeholder.jpg'"
+                                :alt="profile.beeer_name" class="rounded-full border border-gray-300" width="100"
                                 height="100" />
 
                             <div class="flex justify-between font-semibold text-black dark:text-white text-xl mt-2">
                                 <span>
 
-                                    Eyob Nigussie
+                                    {{ profile?.profile_detail[0]?.first_name + " " +
+                    profile?.profile_detail[0]?.last_name }} | {{ profile.beeer_name }}
                                 </span>
 
                                 <UButton v-if="route.params.id !== UID" size="sm" color="amber" square variant="solid">
                                     Crown
                                 </UButton>
                             </div>
-                            <a class="italic text-sm text-primary underline" href="#">Personal portfolio</a>
+                            <a class="italic text-sm text-blue-500 font-semibold underline" href="#" target="_blank">
+                                <Icon name="i-heroicons-link" class="size-4 " /> {{
+                    profile.profile_detail[0].website }}
+                            </a>
                             <div class="text-gray-500 text-sm mt-2">
-                                lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-                                ullamcorper
-                                mattis, pulvinar dapibus leo.
+                                {{ profile.profile_detail[0].bio }}
                             </div>
                             <div class="mt-4">
                                 <div class="flex mb-3 space-x-4">
-                                    <NuxtLink v-for="i in 5" :key="i" aria-label="Open Youtube profile"
+                                    <NuxtLink v-for="i in profile.social_links" :key="i"
                                         class="text-sm text-gray-500 transition hover:text-gray-600" target="_blank"
-                                        rel="me" to="/hello"><span class="sr-only">Youtube</span>
-                                        <Icon name="ic:baseline-facebook"
-                                            class="transition-transform hover:scale-110 w-6 h-6" />
+                                        rel="me" :to="i.link"><span class="sr-only">{{ i.enum.name }}</span>
+                                        <Icon :name="i.enum.icon"
+                                            class="transition-transform hover:scale-110 size-8 hover:text-primary" />
                                     </NuxtLink>
 
                                 </div>
@@ -89,7 +126,7 @@ const route = useRoute();
                         <UDivider label="Eyoba" class="my-4" />
                         <div>
 
-                            <ProfileDetail />
+                            <ProfileDetail :profile="profile" />
 
                         </div>
                     </div>
@@ -100,4 +137,3 @@ const route = useRoute();
         </div>
     </div>
 </template>
-

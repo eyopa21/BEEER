@@ -1,4 +1,5 @@
 <script setup>
+//definePageMeta({ layout: 'feed' })
 import { GetSingleBlogs } from '../../queries/blogs/get.gql'
 import { like_query, unlike_query } from '../../queries/blogs/like.gql'
 import { parseMarkdown } from '~/utils/parseMarkdown'
@@ -15,6 +16,14 @@ const layout = useLayout();
 const toast = useToast();
 const blog = ref('')
 const likes = ref([])
+const totalComments = computed(() => {
+    let count = blog.value?.comments?.length;
+    blog.value?.comments?.map(comm => {
+        count += comm.replies_aggregate.aggregate.count
+    })
+    return count
+})
+
 onResult(async res => {
     blog.value = res.data?.blogs[0]
     likes.value = blog.value?.likes?.map(lik => {
@@ -83,17 +92,21 @@ const toggleLike = () => {
 <template>
     <div>
 
-        <div class="flex w-full">
+        <div class="flex flex-col lg:flex-row w-full">
             <div v-if="loading">
                 <VUEInnerLoading />
             </div>
-            <div v-if="blog" class="w-2/3 px-4 pl-6 mt-4">
+
+            <div v-if="blog" class="w-full  lg:w-[60%] xl:w-2/3 px-4 pl-6 mt-4">
                 <div class="rounded-lg shadow-front-2 dark:bg-foreground mb-7">
                     <img class="w-full rounded h-96 " :src="blog.image" alt="">
                     <div class="p-6 border-b border-gray-200 dark:border-gray-800">
                         <h5
-                            class="text-primary lg:text-2xl text-lg font-semibold underline uppercase dark:text-primary mb-6">
-                            {{ blog.title }}</h5>like{{ likes }}
+                            class="text-primary lg:text-2xl text-lg font-semibold underline uppercase dark:text-primary ">
+                            {{ blog.title }}</h5>
+                        <h2 class="mr-4  font-semibold   mb-6">
+                            {{ blog.subtitle }}
+                        </h2>
                         <div class="flex justify-between flex-wrap mb-9">
                             <div class="flex items-center mb-4 mr-4">
                                 <div
@@ -112,7 +125,8 @@ const toggleLike = () => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h6 class="text-gray-500 font-normal dark:text-gray-400 text-sm"> Posted By </h6>
+                                    <h6 class="text-gray-500 font-normal dark:text-gray-400 text-sm"> Posted By
+                                    </h6>
                                     <p class="text-gray-700 dark:text-gray-100 text-sm font-medium">
                                         {{ blog.author.beeer_name }}</p>
                                 </div>
@@ -145,9 +159,9 @@ const toggleLike = () => {
                                         </path>
                                     </svg>
                                 </div>
-                                <h6 class="text-gray-500 dark:text-gray-400 text-sm">575</h6>
+                                <h6 class="text-gray-500 dark:text-gray-400 text-sm">{{ totalComments }}</h6>
                             </div>
-                            <div class="flex items-center mb-4 mr-4">
+                            <!--div class="flex items-center mb-4 mr-4">
                                 <div
                                     class="bg-gray-200 dark:bg-gray-800 mr-3 w-9 h-9 rounded-full flex-shrink-0 flex justify-center items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -159,7 +173,7 @@ const toggleLike = () => {
                                     </svg>
                                 </div>
                                 <h6 class="text-gray-500 dark:text-gray-400 text-sm">575</h6>
-                            </div>
+                            </!--div-->
                         </div>
                         <div
                             class="prose prose-sm sm:prose lg:prose-lg dark:prose-invert  overflow-x-scroll dark:text-white w-full mb-10 mt-8">
@@ -216,12 +230,12 @@ const toggleLike = () => {
 
                         </div>
                     </div>
-                    <BlogComment :comment="blog.comments" />
+                    <BlogComment :comment="blog.comments" @refetch="refetch()" />
                 </div>
             </div>
-            <div class="w-1/3 mt-8">
-                <div class="col-span-4 md:col-span-12 ">
-                    <div class="max-w-[400px] pl-7 lg:pl-0">
+            <div class="w-full lg:w-[40%] xl:w-1/3 mt-8">
+                <div class=" ">
+                    <div class="lg:max-w-[400px] px-2 lg:pl-0">
                         <BlogAuthor v-if="blog" :author="blog.author" />
                         <BlogSearch />
                         <BlogTrending />

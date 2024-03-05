@@ -95,7 +95,9 @@ query GetSingleBlogs($id: uuid!) {
       comment
       created_at
       updated_at
+      blog_id
       author {
+        id
         beeer_name
         profile_detail {
           profile_picture
@@ -116,6 +118,11 @@ query GetSingleBlogs($id: uuid!) {
             last_name
             profile_picture
           }
+        }
+      }
+      replies_aggregate {
+        aggregate {
+          count
         }
       }
     }

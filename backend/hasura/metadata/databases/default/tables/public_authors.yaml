@@ -2,12 +2,40 @@ table:
   name: authors
   schema: public
 array_relationships:
+  - name: blogs
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: blogs
+          schema: public
+  - name: certificates
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: certificates
+          schema: public
+  - name: educations
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: educations
+          schema: public
   - name: profile_detail
     using:
       foreign_key_constraint_on:
         column: author_id
         table:
           name: profile_details
+          schema: public
+  - name: projects
+    using:
+      foreign_key_constraint_on:
+        column: author_id
+        table:
+          name: projects
           schema: public
   - name: social_links
     using:

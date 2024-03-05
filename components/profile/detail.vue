@@ -1,6 +1,7 @@
+<script setup>
 
+const props = defineProps(['profile'])
 
-<script setup lang="ts">
 const items = [{
     key: 'education',
     label: 'Education',
@@ -27,16 +28,17 @@ const items = [{
                             {{ item.description }}
                         </p>
                         </!--div-->
-                    <div class="p-2">
+                    <div class="p-2" v-if="props.profile">
 
                         <div v-if="item.key === 'education'" class="space-y-3">
-                            <LazyProfileEducationTab />
+                            <LazyProfileEducationTab :educations="props.profile?.educations" />
                         </div>
                         <div v-else-if="item.key === 'certificate'" class="space-y-3">
-                            <LazyProfileCertificatesTab />
+                            <LazyProfileCertificatesTab :certificates="props.profile?.certificates" />
                         </div>
                         <div v-else-if="item.key === 'project'" class="space-y-3">
-                            <LazyProfileProjectsTab />
+
+                            <LazyProfileProjectsTab :projects="props.profile?.projects" />
                         </div>
 
                     </div>
@@ -45,4 +47,3 @@ const items = [{
         </UTabs>
     </div>
 </template>
-

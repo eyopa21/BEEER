@@ -1,13 +1,17 @@
-<script setup >
+<script setup>
 const { onLogout } = useApollo()
 const UID = useCookie('UID')
 const router = useRouter();
+const currentUser = useCurrentUser();
 const items = [
     [{
+        label: currentUser.value?.currentUser?.email,
+        slot: 'account',
+        disabled: true
+    }],
+    [{
         label: 'Profile',
-        avatar: {
-            src: 'https://avatars.githubusercontent.com/u/739984?v=4'
-        },
+
         click: () => {
             router.push(`/account/profile-${UID.value}`)
         }
@@ -34,8 +38,26 @@ const items = [
 </script>
 
 <template>
-    <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
-        <UButton color="white" label="Profile" trailing-icon="i-heroicons-chevron-down-20-solid" />
+    <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
+        :popper="{ placement: 'bottom-start' }">
+        <UAvatar :src="currentUser.currentUser?.profile_detail[0]?.profile_picture || '/placeholder.jpg'" />
+
+        <template #account="{ item }">
+            <div class="text-left">
+                <p>
+                    Signed in as
+
+                </p>
+                <p class="truncate font-medium text-gray-900 dark:text-white">
+                    {{ item.label }}
+                </p>
+            </div>
+        </template>
+
+        <template #item="{ item }">
+            <span class="truncate">{{ item.label }}</span>
+
+            <UIcon :name="item.icon" class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto" />
+        </template>
     </UDropdown>
 </template>
-

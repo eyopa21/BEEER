@@ -1,0 +1,15 @@
+mutation InsertComments(
+  $comment: String!
+  $blog_id: uuid!
+  $commentor_id: uuid!
+) {
+  insert_comments_one(
+    object: {
+      comment: $comment
+      blog_id: $blog_id
+      commentor_id: $commentor_id
+    }
+  ) {
+    id
+  }
+}

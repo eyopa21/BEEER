@@ -1,31 +1,65 @@
 <script setup>
 import { z } from 'zod'
+import { InsertComments } from '../../../queries/blogs/comments.gql'
 const UID = useCookie('UID')
+const route = useRoute();
+const layout = useLayout();
 const {
     formatDate
 } = useHelpers();
 const props = defineProps(['comment'])
-const items = [
+const emit = defineEmits(['refetch'])
+
+const {
+    mutate: AddComment,
+    onDone: onAddDone,
+    onError: onAddError,
+    loading: addLoading
+} = useMutation(InsertComments)
+const commentInputRef = ref(null)
+const items = (type, row) => [
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
-        if: (false),
         click: () => {
-            console.log('Edit')
+            if (type === 'comment') {
+
+                console.log("comment", commentInputRef.value)
+                commentInputRef.value?.focus();
+            } else if (type === 'reply') {
+                console.log("reply", row)
+            }
         }
     }, {
         label: 'Delete',
         icon: 'i-heroicons-trash-20-solid',
-    }, {
-        label: 'Report',
-        icon: 'i-heroicons-archive-box-20-solid'
     }]
 ]
+
 const CommentState = ref({
     comment: ''
 })
 const CommentSchema = z.object({
-    comment: z.string().min(1, 'required'),
+    comment: z.string().min(1, 'Please, write your comment'),
+})
+
+const ADD = () => {
+    AddComment({ blog_id: route.params.id, commentor_id: UID.value, comment: CommentState.value.comment })
+    onAddDone(res => {
+        emit('refetch')
+        CommentState.value = {}
+    })
+    onAddError(err => {
+        layout.value.showAlert = { error: true, message: err.message }
+    })
+}
+
+const totalComments = computed(() => {
+    let count = props.comment?.length;
+    props.comment?.map(comm => {
+        count += comm.replies_aggregate.aggregate.count
+    })
+    return count
 })
 
 </script>
@@ -36,22 +70,26 @@ const CommentSchema = z.object({
         <div class="w-full px-4">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
-                    Discussion (20)</h2>
+                    Discussion {{
+                        totalComments }}</h2>
+
+
             </div>
-            <UForm :schema="CommentSchema" :state="CommentState" class="mb-6">
+            <UForm :schema="CommentSchema" :state="CommentState" class="mb-6" @submit="ADD">
                 <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg ">
                     <UFormGroup name="comment">
 
                         <label for="comment" class="sr-only">Your comment</label>
-                        <UTextarea v-model="CommentState.comment" id="comment" rows="6"
+                        <UTextarea v-model="CommentState.comment" id="comment" rows="6" ref="commentInputRef"
+                            tabindex="0"
                             class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                             placeholder="Write a comment..."></UTextarea>
                     </UFormGroup>
                 </div>
-                <button type="submit"
+                <UButton :loading="addLoading" type="submit"
                     class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
                     Post comment
-                </button>
+                </UButton>
             </UForm>
             <div v-for="i in props.comment" :key="i">
 
@@ -61,19 +99,20 @@ const CommentSchema = z.object({
                             <p
                                 class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                                 <img class="mr-2 w-6 h-6 rounded-full" :src="i.author.profile_detail[0].profile_picture"
-                                    alt="Michael Gough">{{
-                i.author.profile_detail[0].first_name + " " +
-                i.author.profile_detail[0].last_name }} | {{
-                i.author.beeer_name }}
+                                    :alt="i.author?.beeer_name">{{
+                        i.author.profile_detail[0].first_name + " " +
+                        i.author.profile_detail[0].last_name }} | {{
+                        i.author.beeer_name }}
                             </p>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
                                 <time> {{ formatDate(i.created_at) }} {{ i.updated_at
-                !== i.created_at ? '(edited)' :
-                ''
+                        !== i.created_at ? '(edited)' :
+                        ''
                                     }}</time>
                             </p>
                         </div>
-                        <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+                        <UDropdown v-if="i.author.id === UID" :items="items('comment', i)"
+                            :popper="{ placement: 'bottom-start' }">
                             <button
                                 class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                 type="button">
@@ -85,6 +124,8 @@ const CommentSchema = z.object({
                                 <span class="sr-only">Comment settings</span>
                             </button>
                         </UDropdown>
+
+
 
                     </footer>
                     <p class="text-gray-500 dark:text-gray-400 pl-8">{{ i.comment }}</p>
@@ -111,18 +152,19 @@ const CommentSchema = z.object({
                                     :src="reply.author.profile_detail[0].profile_picture"
                                     :alt="reply.author.beeer_name" />
                                 {{
-                reply.author.profile_detail[0].first_name + " " +
-                reply.author.profile_detail[0].last_name }} | {{
-                reply.author.beeer_name }}
+                        reply.author.profile_detail[0].first_name + " " +
+                        reply.author.profile_detail[0].last_name }} | {{
+                        reply.author.beeer_name }}
                             </p>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
                                 <time> {{ formatDate(reply.created_at) }} {{
-                reply.updated_at !== reply.created_at ? '(edited)' :
-                    ''
-                                    }}</time>
+                        reply.updated_at !== reply.created_at ? '(edited)' :
+                            ''
+                    }}</time>
                             </p>
                         </div>
-                        <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
+                        <UDropdown v-if="reply.author.id === UID" :items="items('reply', reply)"
+                            :popper="{ placement: 'bottom-start' }">
 
                             <button
                                 class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -134,9 +176,8 @@ const CommentSchema = z.object({
                                 </svg>
                                 <span class="sr-only">Comment settings</span>
                             </button>
-
-
                         </UDropdown>
+
                     </footer>
                     <p class="text-gray-500 dark:text-gray-400">{{ reply.reply }}</p>
 

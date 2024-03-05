@@ -30,6 +30,7 @@ select_permissions:
         - id
         - replier_id
       filter: {}
+      allow_aggregations: true
     comment: ""
   - role: author
     permission:
@@ -41,6 +42,7 @@ select_permissions:
         - id
         - replier_id
       filter: {}
+      allow_aggregations: true
     comment: ""
 update_permissions:
   - role: author
