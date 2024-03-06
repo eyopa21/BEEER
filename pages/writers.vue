@@ -10,6 +10,13 @@ onResult(res => {
 onError(err => {
     layout.value.showAlert = { error: true, message: err.message }
 })
+
+const isWritersEmpty = ref(computed(() => {
+    if (loading.value) return false
+    if (authors.value?.length) return false
+    return true
+}))
+
 </script>
 
 
@@ -18,7 +25,13 @@ onError(err => {
 
         <div class="px-6 py-8">
             <div class="container flex flex-col lg:flex-row justify-between mx-auto">
-                <div v-if="authors?.length" class="w-full lg:w-8/12 space-y-4">
+                <div v-if="isWritersEmpty">
+                    <VUENoItemFound title="No writers found" subtitle="PLease, try again" />
+                </div>
+                <div v-if="loading">
+                    <VUEInnerLoading />
+                </div>
+                <div v-else class="w-full lg:w-8/12 space-y-4">
                     <h2 class="mb-8 font-bold text-3xl">
                         Top Writers
                     </h2>
@@ -37,7 +50,7 @@ onError(err => {
                                     <div class="flex items-center justify-between sm:mt-2">
                                         <div class="flex items-center">
                                             <div class="flex flex-col">
-                                                <NuxtLink to="/account/profile-2"
+                                                <NuxtLink :to="`/account/profile-${i.id}`"
                                                     class="w-full cursor-pointer hover:underline underline-offset-2 flex-none text-lg text-black uppercase dark:text-gray-400 font-semibold leading-none">
                                                     {{ i?.profile_detail[0]?.first_name + " " +
                     i?.profile_detail[0]?.last_name }} | {{ i.beeer_name }}</NuxtLink>

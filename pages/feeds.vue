@@ -24,6 +24,11 @@ onError(err => {
 
     layout.value.showAlert = { error: true, message: err.message }
 })
+const isFeedsEmpty = ref(computed(() => {
+    if (loading.value) return false
+    if (blogs.value?.length) return false
+    return true
+}))
 </script>
 
 <template>
@@ -33,6 +38,9 @@ onError(err => {
 
             <div class="px-6 py-8">
                 <div class="container flex flex-col lg:flex-row justify-between mx-auto">
+                    <div v-if="isFeedsEmpty">
+                        <VUENoItemFound title="No feeds found" subtitle="PLease, try again" />
+                    </div>
                     <VUEInnerLoading v-if="loading" />
                     <div v-else class="w-full lg:w-8/12">
                         <div class="flex items-center justify-between">
@@ -107,7 +115,7 @@ onError(err => {
                                                             {{ i?.profile_detail[0]?.first_name + " " +
                         i?.profile_detail[0]?.last_name }}</div>
                                                         <p class="text-sm text-gray-500 leading-none mt-1">{{
-                        i.profile_detail[0].profession }}
+                                                            i.profile_detail[0].profession }}
                                                         </p>
                                                     </div>
                                                 </div>
