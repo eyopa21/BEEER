@@ -2,7 +2,60 @@
 definePageMeta({
     layout: 'auth'
 })
+import {
+    LoginValidationSchema
+} from '../../../zod/LoginSchema'
+import { login_query } from '../../../queries/auth/authors.gql'
+const {
+    onLogin,
+    onLogout,
+    getToken
+} = useApollo()
+const {
+    mutate: Login,
+    onDone,
+    onError,
+    loading
+} = useMutation(login_query)
+const router = useRouter();
+const layout = useLayout();
+const UID = useCookie('UID')
+const LoginState = ref({
 
+    email: '',
+    password: ''
+})
+const LOGIN = () => {
+    UID.value = null
+    onLogout()
+    Login({
+
+        email: LoginState.value.email,
+        password: LoginState.value.password
+    })
+    onDone(async res => {
+        console.log("is verif", res.data.Login.is_verified)
+        await onLogout()
+        await onLogin(res.data.Login.token)
+        UID.value = res.data.Login.id;
+        if (!res.data.Login.is_verified) {
+            router.push('/auth/user/verify')
+        } else {
+            reloadNuxtApp({
+                path: "/",
+                ttl: 1000,
+            });
+        }
+    })
+    onError(async err => {
+        UID.value = null
+        await onLogout()
+        layout.value.showAlert = {
+            message: err.message,
+            error: true
+        }
+    })
+}
 </script>
 
 <template>
@@ -42,21 +95,12 @@ definePageMeta({
                             </div>
                             <div class="flex border-gray-200 dark:border-gray-800 w-full border-t border-solid"></div>
                         </div>
-                        <form class="space-y-6">
+                        <UForm :schema="LoginValidationSchema" :state="LoginState" class="space-y-6" @submit="LOGIN">
                             <div class="">
-                                <div class="">
-                                    <div class="flex content-center items-center justify-between text-sm">
-                                        <label for="aUkbh3TvCg:1"
-                                            class="block font-medium text-gray-700 dark:text-gray-200">Email</label>
-                                    </div>
-                                </div>
-                                <div class="mt-1 relative">
-                                    <div class="relative">
-                                        <input id="aUkbh3TvCg:1" name="email" value="" type="text"
-                                            placeholder="Enter your email"
-                                            class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400" />
-                                    </div>
-                                </div>
+                                <UFormGroup name="email" v-slot="{ error }" label="Email" :eager-validation="true">
+                                    <UInput v-model="LoginState.email" type="email" placeholder="abebe@gmail.com"
+                                        :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
+                                </UFormGroup>
                             </div>
                             <div class="">
                                 <div class="">
@@ -67,20 +111,16 @@ definePageMeta({
                                                 class="text-primary font-medium">Forgot password?</a></span>
                                     </div>
                                 </div>
-                                <div class="mt-1 relative">
-                                    <div class="relative">
-                                        <input id="aUkbh3TvCg:2" name="password" value="" type="password"
-                                            placeholder="Enter your password"
-                                            class="relative block w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 form-input rounded-md placeholder-gray-400 dark:placeholder-gray-500 text-sm px-3 py-2 shadow-sm bg-white dark:bg-gray-900 text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400" />
-                                    </div>
-                                </div>
+                                <UFormGroup name="password" v-slot="{ error }" :eager-validation="true">
+                                    <UInput v-model="LoginState.password" type="password" placeholder="***********"
+                                        :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
+                                </UFormGroup>
                             </div>
-                            <button type="submit"
+                            <UButton type="submit" :loading="loading"
                                 class="focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 shadow-sm text-white dark:text-gray-900 bg-primary-500 hover:bg-primary-600 disabled:bg-primary-500 dark:bg-primary-400 dark:hover:bg-primary-500 dark:disabled:bg-primary-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:focus-visible:outline-primary-400 w-full flex justify-center items-center">
-                                <span class="">Continue</span><span
-                                    class="i-heroicons-arrow-right-20-solid flex-shrink-0 h-5 w-5"></span>
-                            </button>
-                        </form>
+                                <span>Login</span>
+                            </UButton>
+                        </UForm>
                     </div>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center">
                         By signing in, you agree to our

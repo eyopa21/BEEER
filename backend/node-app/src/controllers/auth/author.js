@@ -12,37 +12,38 @@ const client = new GraphQLClient(process.env.HASURA_URI, {
 });
 
 exports.login = async (req, res, next) => {
+  console.log("login")
   const HASURA_OPERATION = `
 query myQuery($email: String!){
-users(where: {email: {_eq: $email}}) {
+authors(where: {email: {_eq: $email}}) {
+
 id
 email
 password
-role
-company_id
+is_verified
 is_deleted
+is_suspended
 }
 }`;
   const { email, password } = req.body.input;
   try {
     const data = await client.request(HASURA_OPERATION, { email });
-    console.log(data);
-    if (data.users[0]) {
-      if (data.users[0]?.is_deleted) {
-        return res.status(400).json({ message: "Account is deleted" });
+   
+    if (data.authors[0]) {
+      if (data.authors[0]?.is_deleted || data.authors[0]?.is_suspended ) {
+        return res.status(400).json({ message: "Account is not active right now" });
       } else {
-        const match = await bcrypt.compare(password, data.users[0].password);
+        const match = await bcrypt.compare(password, data.authors[0].password);
         if (match) {
           const tokenContents = {
             sub: "user",
-            email: data.users[0].email,
-            uid: data.users[0].id,
-            company_id: data.users[0].company_id,
+            email: data.authors[0].email,
+            uid: data.authors[0].id,
             "https://hasura.io/jwt/claims": {
-              "x-hasura-allowed-roles": [data.users[0].role, "anonymous"],
-              "x-hasura-default-role": data.users[0].role,
-              "x-hasura-user-id": data.users[0].id.toString(),
-              "x-hasura-company-id": data.users[0].company_id.toString(),
+              "x-hasura-allowed-roles": ['author', "anonymous"],
+              "x-hasura-default-role": 'author',
+              "x-hasura-user-id": data.authors[0].id.toString(),
+
             },
           };
           jwt.sign(tokenContents, process.env.JWT_SECRET, (err, token) => {
@@ -50,7 +51,7 @@ is_deleted
               res.sendStatus(403);
             } else {
               return res.json({
-                ...data.users[0],
+                ...data.authors[0],
                 token: token,
               });
             }

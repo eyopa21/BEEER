@@ -5,6 +5,12 @@ actions:
       handler: http://host.docker.internal:4002/api/v1/auth/author/changepassword
     permissions:
       - role: author
+  - name: Login
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4002/api/v1/auth/author/login
+    permissions:
+      - role: anonymous
   - name: SignUp
     definition:
       kind: synchronous
@@ -32,4 +38,5 @@ custom_types:
     - name: verifyOutput
     - name: ChangePasswordOutput
     - name: UploadImageOutput
+    - name: LoginOutput
   scalars: []

@@ -29,3 +29,12 @@ mutation change_password_query(
     id
   }
 }
+
+mutation login_query($email: String!, $password: String!) {
+  Login(email: $email, password: $password) {
+    id
+    email
+    token
+    is_verified
+  }
+}

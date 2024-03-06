@@ -7,6 +7,13 @@ type Mutation {
 }
 
 type Mutation {
+  Login(
+    email: String!
+    password: String!
+  ): LoginOutput
+}
+
+type Mutation {
   SignUp(
     email: String!
     password: String!
@@ -48,5 +55,12 @@ type ChangePasswordOutput {
 
 type UploadImageOutput {
   url: String!
+}
+
+type LoginOutput {
+  email: String!
+  id: uuid!
+  token: String!
+  is_verified: Boolean!
 }
 
