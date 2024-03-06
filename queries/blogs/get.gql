@@ -30,7 +30,7 @@ query get_single_blog_query($author_id: uuid!, $id: uuid!) {
   }
 }
 
-query GetBlogs {
+query get_feeds_query {
   blogs(order_by: { updated_at: desc }) {
     tags
     category
@@ -45,6 +45,55 @@ query GetBlogs {
     author {
       email
       beeer_name
+      profile_detail {
+        profile_picture
+      }
+    }
+  }
+
+  authors {
+    is_deleted
+    is_suspended
+    is_verified
+    beeer_name
+    code
+    email
+    created_at
+    updated_at
+    id
+    profile_detail {
+      first_name
+      last_name
+      phone_number
+      location
+      profession
+      profile_picture
+      website
+      work_email
+      work_place
+      date_of_birth
+      bio
+      id
+    }
+    certificates_aggregate {
+      aggregate {
+        count
+      }
+    }
+    educations_aggregate {
+      aggregate {
+        count
+      }
+    }
+    projects_aggregate {
+      aggregate {
+        count
+      }
+    }
+    blogs_aggregate {
+      aggregate {
+        count
+      }
     }
   }
 }

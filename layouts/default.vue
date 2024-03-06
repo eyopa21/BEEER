@@ -9,23 +9,23 @@ const links = [
         to: '/'
     }], [{
         label: 'Feeds',
-        icon: 'i-heroicons-chart-bar',
+        icon: 'i-heroicons-rss-16-solid',
         to: '/feeds'
     },
     {
         label: 'Writers',
-        icon: 'i-heroicons-chart-bar',
+        icon: 'i-heroicons-pencil-solid',
         to: '/writers'
     }], [{
         label: 'FAQs',
-        icon: 'i-heroicons-command-line',
-        to: '/components/command-palette'
+        icon: 'i-heroicons-question-mark-circle',
+        to: '/#faqs'
     }, {
         label: 'Documentation',
         icon: 'i-heroicons-light-bulb'
     }, {
         label: 'Help',
-        icon: 'i-heroicons-question-mark-circle'
+        icon: 'i-heroicons-chat-bubble-left-ellipsis'
     }]
 ]
 </script>

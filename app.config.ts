@@ -65,7 +65,14 @@ export default defineAppConfig({
             }
         },
 
-
+        verticalNavigation: {
+            padding: ' py-3',
+            divider: {
+                wrapper: {
+                    base: 'p-2 py-4',
+                },
+            }
+        }
 
     }
 })

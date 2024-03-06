@@ -39,7 +39,8 @@ try {
       <NuxtPage />
       <UNotifications />
     </NuxtLayout>
-    <div v-if="loading" class="fixed inset-0 z-50 bg-gray-900  max-h-screen overscroll-contain  max-w-screen opacity-80 ">
+    <div v-if="loading"
+      class="fixed inset-0 z-50 bg-gray-900  max-h-screen overscroll-contain  max-w-screen opacity-80 ">
 
       <VUELoading />
     </div>

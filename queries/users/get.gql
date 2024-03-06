@@ -33,6 +33,26 @@ query get_current_user_query($id: uuid!) {
       created_at
       updated_at
     }
+    certificates_aggregate {
+      aggregate {
+        count
+      }
+    }
+    educations_aggregate {
+      aggregate {
+        count
+      }
+    }
+    projects_aggregate {
+      aggregate {
+        count
+      }
+    }
+    blogs_aggregate {
+      aggregate {
+        count
+      }
+    }
   }
 }
 
@@ -82,6 +102,54 @@ query get_educations_query($author_id: uuid!) {
     end_date
     created_at
     updated_at
+  }
+}
+
+query GetAuthors_query {
+  authors {
+    is_deleted
+    is_suspended
+    is_verified
+    beeer_name
+    code
+    email
+    created_at
+    updated_at
+    id
+    profile_detail {
+      first_name
+      last_name
+      phone_number
+      location
+      profession
+      profile_picture
+      website
+      work_email
+      work_place
+      date_of_birth
+      bio
+      id
+    }
+    certificates_aggregate {
+      aggregate {
+        count
+      }
+    }
+    educations_aggregate {
+      aggregate {
+        count
+      }
+    }
+    projects_aggregate {
+      aggregate {
+        count
+      }
+    }
+    blogs_aggregate {
+      aggregate {
+        count
+      }
+    }
   }
 }
 

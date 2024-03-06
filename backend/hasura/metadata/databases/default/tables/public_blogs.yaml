@@ -59,6 +59,7 @@ select_permissions:
         - author_id
         - id
       filter: {}
+      allow_aggregations: true
     comment: ""
   - role: author
     permission:
@@ -74,6 +75,7 @@ select_permissions:
         - author_id
         - id
       filter: {}
+      allow_aggregations: true
     comment: ""
 update_permissions:
   - role: author

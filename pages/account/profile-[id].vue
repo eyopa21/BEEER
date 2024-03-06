@@ -5,12 +5,16 @@ const UID = useCookie('UID')
 import { get_single_user_query } from '../../queries/users/get.gql'
 const { onResult, onError, loading, refetch } = useQuery(get_single_user_query, { id: route.params.id })
 const { formatDate } = useHelpers();
+const layout = useLayout();
 const profile = ref('')
 
 onResult(res => {
     profile.value = res.data?.authors[0]
 })
 
+onError(err => {
+    layout.value.showAlert = { error: true, message: err.message }
+})
 
 const isBlogEmpty = ref(computed(() => {
     if (loading.value) return false
@@ -89,9 +93,9 @@ const noUserFound = ref(computed(() => {
                         class=" bg-transparent dark:bg-black w-full lg:w-4/12 lg:-mx-8 lg:block lg:sticky lg:top-32 h-full">
                         <div>
 
-                            <NuxtImg :src="profile?.profile_detail[0]?.profile_picture || '/placeholder.jpg'"
-                                :alt="profile.beeer_name" class="rounded-full border border-gray-300" width="100"
-                                height="100" />
+
+                            <UAvatar size="3xl" :src="profile?.profile_detail[0]?.profile_picture || '/placeholder.jpg'"
+                                :alt="profile.beeer_name" />
 
                             <div class="flex justify-between font-semibold text-black dark:text-white text-xl mt-2">
                                 <span>
@@ -108,7 +112,7 @@ const noUserFound = ref(computed(() => {
                                 <Icon name="i-heroicons-link" class="size-4 " /> {{
                     profile.profile_detail[0].website }}
                             </a>
-                            <div class="text-gray-500 text-sm mt-2">
+                            <div class="text-gray-500 text-sm  break-words  break-all  text-wrap max-w-96 mt-2">
                                 {{ profile.profile_detail[0].bio }}
                             </div>
                             <div class="mt-4">

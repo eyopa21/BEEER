@@ -1,18 +1,33 @@
+<script setup>
+import { GetAuthors_query } from '../queries/users/get.gql'
+const { onResult, onError, loading, refetch } = useQuery(GetAuthors_query)
+const authors = ref([])
+
+onResult(res => {
+    authors.value = res.data?.authors
+
+})
+onError(err => {
+    layout.value.showAlert = { error: true, message: err.message }
+})
+</script>
+
+
 <template>
     <div class=" bg-gray-100 dark:bg-black">
 
         <div class="px-6 py-8">
-            <div class="container flex  justify-between mx-auto">
-                <div class="w-full lg:w-8/12 space-y-4">
+            <div class="container flex flex-col lg:flex-row justify-between mx-auto">
+                <div v-if="authors?.length" class="w-full lg:w-8/12 space-y-4">
                     <h2 class="mb-8 font-bold text-3xl">
                         Top Writers
                     </h2>
-                    <div v-for="(i, key) in 10" :key="key" class="flex flex-col sticky  top-0 z-10">
+                    <div v-for="(i, key) in authors" :key="key" class="flex flex-col sticky  top-0 z-10">
                         <div class="bg-white dark:bg-black  shadow-lg dark:border border-gray-900 rounded-2xl p-4">
                             <div class="flex-none sm:flex">
                                 <div class=" relative h-32 w-32   sm:mb-0 mb-3">
-                                    <img src="https://tailwindcomponents.com/storage/avatars/njkIbPhyZCftc4g9XbMWwVsa7aGVPajYLRXhEeoo.jpg"
-                                        alt="aji" class="min-w-32 w-32 h-32 object-cover rounded-2xl">
+                                    <img :src="i.profile_detail[0].profile_picture || '/placeholder.jpg'"
+                                        :alt="i.beeer_name" class="min-w-32 w-32 h-32 object-cover rounded-2xl">
                                     <a href="#"
                                         class="absolute -right-2 bottom-2   -ml-3  text-white p-1 text-xs bg-green-400 hover:bg-green-500 font-medium tracking-wider rounded-full transition ease-in duration-300">
                                         <span class="w-4 h-4">{{ key + 1 }}</span>
@@ -23,23 +38,24 @@
                                         <div class="flex items-center">
                                             <div class="flex flex-col">
                                                 <NuxtLink to="/account/profile-2"
-                                                    class="w-full cursor-pointer hover:underline underline-offset-2 flex-none text-lg text-black dark:text-gray-400 font-bold leading-none">
-                                                    Eyob Nigussie</NuxtLink>
+                                                    class="w-full cursor-pointer hover:underline underline-offset-2 flex-none text-lg text-black uppercase dark:text-gray-400 font-semibold leading-none">
+                                                    {{ i?.profile_detail[0]?.first_name + " " +
+                    i?.profile_detail[0]?.last_name }} | {{ i.beeer_name }}</NuxtLink>
                                                 <div class="flex-auto text-gray-500 my-1">
-                                                    <span class="mr-3 ">Software Developer</span><span
-                                                        class="mr-3 border-r border-gray-600  max-h-0"></span><span>Addis
-                                                        ababa/Ethiopia</span>
+                                                    <span class="mr-3 ">{{ i.profile_detail[0].profession }}</span><span
+                                                        class="mr-3 border-r border-gray-600  max-h-0"></span><span>{{
+                    i.profile_detail[0].location }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex flex-row items-center">
                                         <div class="flex">
-                                            <p class="text-xs text-gray-400">Lorem ipsum dolor sit amet consectetur
-                                                adipisicing elit. Rem,
-                                                dolores incidunt, provident vel, dolor quidem tempora reiciendis nulla
-                                                eligendi eum quasi? Repellat, veritatis veniam. Voluptatem facere qui illum
-                                                vero ipsa?</p>
+                                            <p
+                                                class="text-xs text-gray-400 break-words line-clamp-3 break-all  text-wrap max-w-96">
+                                                {{
+                    i.profile_detail[0].bio }}
+                                            </p>
                                         </div>
                                         <div class="flex-1 inline-flex   items-center ml-2 space-x-2">
                                             <a hre="https://www.behance.net/ajeeshmon" target="_blank"><svg
@@ -47,10 +63,10 @@
                                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48"
                                                     height="48" viewBox="0 0 172 172" style=" fill:#4a90e2;">
                                                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                                        stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                        font-weight="none" font-size="none" text-anchor="none"
-                                                        style="mix-blend-mode: normal">
+                                                        stroke-linecap="butt" stroke-linejoin="miter"
+                                                        stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                                        font-family="none" font-weight="none" font-size="none"
+                                                        text-anchor="none" style="mix-blend-mode: normal">
                                                         <path d="M0,172v-172h172v172z" fill="none"></path>
                                                         <g fill="#ffffff">
                                                             <path
@@ -65,10 +81,10 @@
                                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30"
                                                     height="30" viewBox="0 0 172 172" style=" fill:#ffffff;">
                                                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                                        stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                        font-weight="none" font-size="none" text-anchor="none"
-                                                        style="mix-blend-mode: normal">
+                                                        stroke-linecap="butt" stroke-linejoin="miter"
+                                                        stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                                        font-family="none" font-weight="none" font-size="none"
+                                                        text-anchor="none" style="mix-blend-mode: normal">
                                                         <path d="M0,172v-172h172v172z" fill="none"></path>
                                                         <g fill="#ffffff">
                                                             <path
@@ -82,10 +98,10 @@
                                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
                                                     height="24" viewBox="0 0 172 172" style=" fill:#ffffff;">
                                                     <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                                        stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                        font-weight="none" font-size="none" text-anchor="none"
-                                                        style="mix-blend-mode: normal">
+                                                        stroke-linecap="butt" stroke-linejoin="miter"
+                                                        stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                                        font-family="none" font-weight="none" font-size="none"
+                                                        text-anchor="none" style="mix-blend-mode: normal">
                                                         <path d="M0,172v-172h172v172z" fill="none"></path>
                                                         <g fill="#ffffff">
                                                             <path
@@ -96,140 +112,74 @@
                                                 </svg></a>
                                         </div>
                                     </div>
-                                    <div class="flex pt-2  text-sm text-gray-400">
+                                    <div class="flex flex-wrap pt-2  text-sm text-gray-400">
                                         <div class="flex-1 inline-flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                                                fill="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                viewBox="0 0 20 20" fill="currentColor">
                                                 <path
                                                     d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z">
                                                 </path>
                                             </svg>
-                                            <p class="">1.2k Followers</p>
+                                            <p class="flex">1.2k <span class="hidden md:block">Crowns</span></p>
                                         </div>
                                         <div class="flex-1 inline-flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                                                fill="currentColor">
+                                            <Icon name="heroicons-solid:briefcase" class="size-5 mr-2" />
+                                            <p class="flex">{{ i.projects_aggregate?.aggregate.count }}
+                                                <span class="hidden md:block">projects</span>
+                                            </p>
+                                        </div>
+                                        <div class="flex-1 inline-flex items-center">
+                                            <Icon name="heroicons:code-bracket-20-solid" class="size-5 mr-2" />
+                                            <p class="flex">{{ i.educations_aggregate?.aggregate.count }}
+                                                <span class="hidden md:block">Eds</span>
+                                            </p>
+                                        </div>
+                                        <div class="flex-1 inline-flex items-center">
+                                            <Icon name="heroicons:newspaper-20-solid" class="size-5 mr-2" />
+                                            <p class="flex">{{ i.certificates_aggregate?.aggregate.count }}
+                                                <span class="hidden md:block"> Certs</span>
+                                            </p>
+                                        </div>
+
+
+                                        <div class="flex-1 inline-flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2"
+                                                viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd"
                                                     d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <p class="">14 Posts</p>
+                                            <p class="flex">{{ i.blogs_aggregate?.aggregate.count }} <span
+                                                    class="hidden md:block">Posts</span></p>
                                         </div>
-                                        <a href="https://www.behance.net/ajeeshmon" target="_blank"
-                                            class="flex-no-shrink bg-green-500 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-green-500 text-white rounded-full transition ease-in duration-300">Subscribe</a>
+                                        <a target="_blank"
+                                            class="flex-no-shrink bg-amber-600 px-5 ml-4 py-2 text-xs shadow-sm hover:shadow-lg font-medium tracking-wider border-2 border-white text-white rounded-full transition ease-in duration-300">Crown</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="hidden w-4/12 -mx-8 lg:block sticky top-32 h-full">
-                    <div class="mb-7 p-5 border-gray-100 border rounded-3xl text-center bg-white relative z-30">
-                        <form>
-                            <div class="relative">
-                                <input type="text" placeholder="Search Post.." class="h-[70px] text-base p-[6px_50px_6px_20px] rounded-[5px]
-                                            bg-[rgba(55,86,247,0.05)] focus:bg-[rgba(55,86,247,0.1)] w-full
-                                            focus-visible:outline-0 transition-all
-                                            focus-visible:border-none ">
-                                <button type="submit"
-                                    class="bg-primary text-xl text-white border-none absolute right-3 top-[52%] h-[50px] leading-[50px] w-[50px] rounded-[6px] -translate-y-1/2">
-                                    <i class="ti-search"></i>
-                                </button>
+                <UDivider label="FILTERS" class=" flex justify-center lg:hidden my-8 lg:my-0" />
+                <div class="w-full  lg:w-4/12 -mx-2 lg:-mx-8  lg:block sticky top-32 h-full">
 
-                            </div>
-                        </form>
-                    </div>
-                    <div class="mb-7 p-5 border-gray-100 rounded-3xl border">
-                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
-                                  
-                                 ">Trending Topics</h3>
-                        <ul>
 
-                            <li v-for="i in 6" :key="i"
-                                class="text-lg font-normal relative sm:text-base mt-5 pt-5 border-t border-gray-100">
+                    <div class="lg:max-w-[400px] px-2 lg:pl-0">
 
-                                <a
-                                    class="block text-[#474f62] relative pl-2  before:text-base transition-all hover:text-primary hover:before:text-primary before:transition-all">
-                                    <Icon name="heroicons:chevron-right" class="w-6 h-6" />
-                                    Photography
-                                    <span class="absolute right-0">(06)</span>
-                                </a>
-                            </li>
+                        <BlogSearch />
+                        <BlogTrending />
+                        <BlogPopular />
 
-                        </ul>
-                    </div>
-                    <div class="mb-7 p-7 border-gray-100 border rounded-3xl">
-                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
-                                  ">Popular Post</h3>
-                        <div class="posts">
+                        <BlogTags />
 
-                            <div v-for="i in 5" :key="i" class="overflow-hidden mt-4 pt-4">
-                                <div class="w-[70px] float-left">
-                                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-                                        alt="" class="rounded-[5px]">
-                                </div>
-                                <div class="w-[calc(100%-70px)] float-left pl-5">
-                                    <span class="text-sm text-[#444444] relative top-[-5px]">22 May 2024
-                                    </span>
-                                    <h4 class="text-lg font-medium"><a
-                                            class="text-[#232f4b] transition-all hover:text-primary">Best tourism site all
-                                            over the
-                                            world.</a>
-                                    </h4>
-                                </div>
-                            </div>
 
-                        </div>
+                        <BlogHelp />
+
                     </div>
 
-                    <div class="mb-7 p-7 border-gray-100 border rounded-3xl">
-                        <h3 class="text-2xl text-gray-700 dark:text-gray-200 relative capitalize pb-5 mb-5
-                                  ">Tags</h3>
-                        <ul class="overflow-hidden">
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Travel</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Food</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Lifestyle</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Business</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Idea</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Finance</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Corporate</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Culture</a></li>
-                            <li class="float-left mr-[8px] mb-[8px]"><a
-                                    class="text-sm inline-block p-[5px_18px] text-[#232f4b] bg-[#ecf4fb] rounded-[5px] transition-all hover:bg-primary hover:text-white"
-                                    href="#">Gym</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-primary p-[30px_40px] lg:p-5">
-                        <h2 class="text-3xl font-bold text-left text-white mb-5">How We Can <br> Help
-                            You!</h2>
-                        <p class="text-white text-lg mb-3">labore et dolore magna aliqua. Quis ipsum
-                            suspendisse
-                            ultrices gravida. Risus
-                            commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                        <a href="contact.html" class="inline-block text-white p-[10px_20px] border border-white text-[18px]
-                                  pr-24 relative mt-3 before:absolute before:text-[18px] before:right-[15px] before:top-1/2 
-                                  before:-translate-y-1/2 before:font-['themify'] before:content-['\e628']
-                                 ">Contact Us</a>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </template>
