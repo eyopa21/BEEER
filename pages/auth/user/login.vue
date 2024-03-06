@@ -107,7 +107,7 @@ const LOGIN = () => {
                                     <div class="flex content-center items-center justify-between text-sm">
                                         <label for="aUkbh3TvCg:2"
                                             class="block font-medium text-gray-700 dark:text-gray-200">Password</label><span
-                                            class="text-gray-500 dark:text-gray-400"><a href="/"
+                                            class="text-gray-500 dark:text-gray-400"><a
                                                 class="text-primary font-medium">Forgot password?</a></span>
                                     </div>
                                 </div>

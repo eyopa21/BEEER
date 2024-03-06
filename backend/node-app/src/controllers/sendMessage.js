@@ -20,7 +20,7 @@ const sendEmail = async(email, code, message) => {
         var mailOptions = {
             from: 'eyobaportfolio@gmail.com',
             to: email,
-            subject: 'NOAH REAL ESTATE',
+            subject: 'BEEER Community',
             html: `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
@@ -183,7 +183,7 @@ const sendEmail = async(email, code, message) => {
                                                         <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Cabin',sans-serif;" align="left">
 
                                                             <div style="font-size: 14px; color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                                <p style="font-size: 14px; line-height: 140%;"><strong>T H A N K S&nbsp; &nbsp;F O R&nbsp; &nbsp;E V E R Y&nbsp; &nbsp;T H I N G !</strong></p>
+                                                                <p style="font-size: 14px; line-height: 140%;"><strong>T H A N K S&nbsp; &nbsp;F O R&nbsp; &nbsp;J O I N I N G&nbsp; &nbsp;U S !</strong></p>
                                                             </div>
 
                                                         </td>

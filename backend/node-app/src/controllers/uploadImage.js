@@ -14,7 +14,7 @@ const filePath = '../image.jpg';
 
 
 
-const bufferData = Buffer.from('Some buffer data here');
+
 
 
 
