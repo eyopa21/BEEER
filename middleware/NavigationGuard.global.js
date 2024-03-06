@@ -2,7 +2,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
    
    const UID = useCookie('UID')
 
-    if ((to.name === 'auth-user-login'|| to.name === 'auth-user-signup' || to.name === 'auth-user-verify') && UID.value) {
+    if ((to.name === 'auth-user-login'|| to.name === 'auth-user-signup') && UID.value) {
         return navigateTo('/');
     }
 
