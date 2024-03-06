@@ -85,14 +85,22 @@ const toggleLike = () => {
     }
 }
 
+const isEmpty = ref(computed(() => {
+    if (loading.value) return false
+    if (blog.value !== '') return false
+    return true
+}))
+
 </script>
 
 
 
 <template>
     <div>
-
         <div class="flex flex-col lg:flex-row w-full">
+            <div v-if="isEmpty" class="w-full mx-auto">
+                <VUENoItemFound />
+            </div>
             <div v-if="loading">
                 <VUEInnerLoading />
             </div>

@@ -38,7 +38,7 @@ const isFeedsEmpty = ref(computed(() => {
 
             <div class="px-6 py-8">
                 <div class="container flex flex-col lg:flex-row justify-between mx-auto">
-                    <div v-if="isFeedsEmpty">
+                    <div v-if="isFeedsEmpty" class="w-full mx-auto">
                         <VUENoItemFound title="No feeds found" subtitle="PLease, try again" />
                     </div>
                     <VUEInnerLoading v-if="loading" />

@@ -25,7 +25,7 @@ const isWritersEmpty = ref(computed(() => {
 
         <div class="px-6 py-8">
             <div class="container flex flex-col lg:flex-row justify-between mx-auto">
-                <div v-if="isWritersEmpty">
+                <div v-if="isWritersEmpty" class="w-full mx-auto">
                     <VUENoItemFound title="No writers found" subtitle="PLease, try again" />
                 </div>
                 <div v-if="loading">
