@@ -7,7 +7,7 @@
                     <h3 class="mb-1 text-slate-900 font-semibold dark:text-slate-200">
                         <span class="mb-1 block text-sm leading-6 text-indigo-500">Headless UI</span>Completely
                         unstyled, fully
-                        accessible UI components
+                        accessible UI compone
                     </h3>
                     <div class="prose prose-slate prose-sm text-slate-600 dark:prose-dark">
                         <p>Completely unstyled, fully accessible UI components, designed to integrate beautifully with
