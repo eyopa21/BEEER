@@ -37,7 +37,8 @@
                 {{ props.name }}
             </span>
         </button>
-        <button v-if="props.variation == 'normal'" :disabled="props.loading" :type="props.type" :class="props.className"
+        <button v-if="props.variation == 'normal'" :disabled="props.loading || props.disabled" :type="props.type"
+            :class="props.className"
             class="inline-flex items-center disabled:opacity-50 py-2.5 px-5 text-sm font-medium text-center text-white rounded-lg bg-gradient-to-br from-pink-500 to-violet-500 sm:ml-auto shadow-md shadow-gray-300 dark:shadow-none hover:scale-[1.02] transition-transform">
             <svg v-if="props.icon == 'plus' && !props.loading" class="mr-2 -ml-1 w-6 h-6" fill="currentColor"
                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +97,10 @@ const props = defineProps({
         required: false
     },
     loading: {
+        type: Boolean,
+        required: false
+    },
+    disabled: {
         type: Boolean,
         required: false
     }
