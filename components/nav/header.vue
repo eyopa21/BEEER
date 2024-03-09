@@ -62,7 +62,7 @@ const isDark = computed({
                     </template>
                 </ClientOnly>
                 <NuxtLink v-if="!UID" to="/auth/user/signup" type="button"
-                    class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-900 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 items-center hidden lg:flex">
+                    class=" font-medium rounded-full text-sm gap-x-2 px-3 py-2 text-gray-900 dark:text-white hover:translate-x-2 transition-all duration-500 dark:hover:bg-gray-900  items-center flex">
                     <span class="">Join community</span><span
                         class="i-heroicons-arrow-right-20-solid flex-shrink-0 h-5 w-5"></span>
                 </NuxtLink>
