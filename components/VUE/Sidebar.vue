@@ -1,10 +1,10 @@
 <template>
     <div id="sidebar"
-        class="w-64 transition-all duration-[.5s] flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 h-full  lg:flex shadow-t-xl">
+        class="w-16 md:w-64 transition-all duration-[.5s] flex fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 h-full  lg:flex shadow-t-xl">
         <div id="inner-sidenav-transition"
-            class="lg:w-64 shadow-violet-500 shadow-lg lg:shadow-none mt-[.4px] lg:mt-0 flex transition-all duration-[.5s]  relative flex-col flex-1 pt-0 min-h-0 bg-gray-100 lg:bg-gray-50 dark:bg-gray-900 border-b-32">
+            class="lg:w-64  mt-[.4px] lg:mt-0 flex transition-all duration-[.5s]  relative flex-col flex-1 pt-0 min-h-0 bg-gray-100 lg:bg-gray-50 dark:bg-gray-900 border-b-32">
             <div class="flex overflow-y-auto flex-col flex-1 pt-8 pb-4">
-                <div class="flex-1 px-3 bg-gray-50 dark:bg-gray-900" id="sidebar-items">
+                <div class="flex-1 md:px-3 bg-gray-50 dark:bg-gray-900" id="sidebar-items">
                     <ul class="pb-2 pt-1">
 
                         <li v-for="( i, key ) in  navs " :key="key" class="">
@@ -20,9 +20,10 @@
                                         <Icon :name="i.icon" class="dark:text-gray-300" />
                                     </ClientOnly>
                                 </div>
-                                <span class="block ml-3 dark:text-white  text-sm font-light" sidebar-toggle-item=""> {{
-                                    i.name
-                                }}
+                                <span class="hidden md:block ml-3 dark:text-white  text-sm font-light"
+                                    sidebar-toggle-item=""> {{
+                            i.name
+                        }}
                                 </span>
                             </NuxtLink>
                             <hr v-if="key == 0 || key == 3"
@@ -38,7 +39,7 @@
         </div>
     </div>
 
-    <div class=" lg:hidden fixed inset-0 z-10 bg-gray-900 opacity-50" id="sidebarBackdrop"></div>
+    <div class=" hidden fixed inset-0 z-10 bg-gray-900 opacity-50" id="sidebarBackdrop"></div>
 </template>
 
 <script setup>

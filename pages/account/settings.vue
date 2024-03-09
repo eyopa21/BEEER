@@ -1,6 +1,6 @@
 <template>
-    <main class=" ml-64 w-full mb-32">
-        <div @scroll="test()" class=" grid grid-cols-1  px-4 pt-6 xl:grid-cols-3 xl:gap-6">
+    <main class=" ml-20 md:ml-64 w-full mb-32">
+        <div @scroll="test()" class=" grid grid-cols-1 md:px-4 pt-6 xl:grid-cols-3 xl:gap-6">
             <div class="col-span-full mb-4 xl:mb-0">
 
                 <h1 class="text-xl font-semibold text-gray-900 dark:text-gray-200 sm:text-2xl">
@@ -25,7 +25,7 @@
                 <!--SettingsSessions/-->
             </div>
         </div>
-        <div class="flex px-4">
+        <!--div class="flex px-4">
             <div
                 class="bg-white dark:bg-gray-900 w-full shadow-lg shadow-gray-200 dark:shadow-gray-700 rounded-2xl p-4 mb-4 xl:mb-0">
                 <div class="flow-root">
@@ -55,7 +55,7 @@
                 </div>
             </div>
 
-        </div>
+        </!--div-->
     </main>
 </template>
 <style>

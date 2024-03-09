@@ -95,7 +95,8 @@ const ADDorUPDATE = () => {
 
 
 <template>
-    <div class="bg-white dark:bg-gray-900 shadow-lg shadow-gray-200  dark:shadow-gray-700 rounded-2xl p-4 mb-6">
+    <div
+        class="bg-white dark:bg-gray-900 w-max md:w-full shadow-lg shadow-gray-200  dark:shadow-gray-700 rounded-2xl p-4 mb-6">
         <div class="flow-root">
 
             <h3 class="dark:text-gray-100 text-xl font-bold">Social accounts</h3>
@@ -138,9 +139,9 @@ const ADDorUPDATE = () => {
         <UModal v-model="isOpen" @close="State = {}; toBeEdited = ''">
             <UForm :schema="AddSocialLinkValidationSchema" :state="State" @submit="ADDorUPDATE">
                 <UCard :ui="{
-                    ring: '',
-                    divide: 'divide-y divide-gray-100 dark:divide-gray-800',
-                }">
+                        ring: '',
+                        divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+                    }">
                     <template #header> FInish the Process </template>
                     <div class="flex flex-col space-y-4">
 
@@ -150,21 +151,23 @@ const ADDorUPDATE = () => {
                                 value-attribute="label"
                                 :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined">
                                 <template #leading>
-                                    <UIcon v-if="State.link_name" name="i-heroicons-user-circle" class="w-4 h-4 mx-0.5" />
+                                    <UIcon v-if="State.link_name" name="i-heroicons-user-circle"
+                                        class="w-4 h-4 mx-0.5" />
 
                                 </template>
                             </UInputMenu>
                         </UFormGroup>
                         <UFormGroup name="the_link" v-slot="{ error }" label="The link" :eager-validation="true">
-                            <UInput v-model="State.the_link" type="text" placeholder="Your current work place..." size="lg"
+                            <UInput v-model="State.the_link" type="text" placeholder="Your current work place..."
+                                size="lg"
                                 :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                         </UFormGroup>
                     </div>
                     <template #footer>
                         <div class="flex justify-end">
                             <UButton size="xl" type="submit" :loading="addLoading || updateLoading"> {{ toBeEdited ?
-                                'Update'
-                                : 'Insert ' }}
+                        'Update'
+                        : 'Insert ' }}
                             </UButton>
                         </div>
                     </template>
@@ -173,4 +176,3 @@ const ADDorUPDATE = () => {
         </UModal>
     </div>
 </template>
-

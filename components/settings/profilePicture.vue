@@ -37,7 +37,8 @@ const UPDATE = () => {
             <div
                 class="bg-white flex space-x-8  dark:bg-gray-900 shadow-lg shadow-gray-200 dark:shadow-gray-700 dark:shadow-md rounded-2xl p-4 mb-6">
 
-                <div class="w-1/2 items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
+                <div
+                    class="w-full md:w-1/2 items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
 
                     <VUEImage @onbase64="(n) => base64 = n"
                         :image="currentUser.currentUser?.profile_detail[0]?.profile_picture" />

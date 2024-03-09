@@ -15,8 +15,7 @@ const isDark = computed({
 <template>
     <header
         class="border-b py-4 border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50 lg:!border-transparent bg-white dark:bg-gray-950">
-        <div
-            class="mx-auto px-4 sm:px-6 lg:px-0  max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">
+        <div class="mx-auto px-4 sm:px-6  max-w-7xl flex items-center justify-between gap-3 h-[--header-height]">
 
             <div class="lg:flex-1 flex items-center gap-1.5">
                 <button @click=" layout.showMainSideBar = true" type="button"

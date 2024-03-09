@@ -3,9 +3,9 @@
         <NuxtLayout name="default">
 
 
-            <div class="flex overflow-hidden bg-white dark:bg-gray-800 ">
+            <div class="flex overflow-y-auto bg-white dark:bg-gray-800 ">
                 <VUESidebar class="block lg:w-64 " />
-                <slot />
+                <slot class="-ml-2" />
 
             </div>
         </NuxtLayout>

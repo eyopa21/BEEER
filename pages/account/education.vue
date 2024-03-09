@@ -165,7 +165,7 @@ const ADDorUPDATE = () => {
 
 </script>
 <template>
-    <div class="w-full ml-64 px-4 mt-8">
+    <div class="w-full ml-20 md:ml-64 px-4 mt-8">
         <div class="flex justify-between mr-8">
 
             <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
@@ -215,7 +215,8 @@ const ADDorUPDATE = () => {
                         <div class="col-span-full">
 
                             <UFormGroup name="school" v-slot="{ error }" label="School name" :eager-validation="true">
-                                <UInput v-model="State.school" type="text" placeholder="The school name here ..." size="lg"
+                                <UInput v-model="State.school" type="text" placeholder="The school name here ..."
+                                    size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
@@ -247,7 +248,8 @@ const ADDorUPDATE = () => {
                         <div class="col-span-full">
 
                             <UFormGroup name="location" v-slot="{ error }" label="Location" :eager-validation="true">
-                                <UInput v-model="State.location" type="text" placeholder="Education location..." size="lg"
+                                <UInput v-model="State.location" type="text" placeholder="Education location..."
+                                    size="lg"
                                     :trailing-icon="error ? 'i-heroicons-exclamation-triangle-20-solid' : undefined" />
                             </UFormGroup>
                         </div>
