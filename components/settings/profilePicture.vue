@@ -10,19 +10,22 @@ const base64 = ref(null)
 
 const UPDATE = () => {
     UploadImage({ base64: base64.value?.base64?.split(",")[1] })
-    onUpdateDone(res => {
+    onUploadDone(res => {
+        console.log("log", res)
         UpdateProfilePicture({
             id: currentUser.value.currentUser?.profile_detail[0].id,
             profile_picture: res.data.UploadImage?.url
         })
     })
     onUploadError(err => {
+        console.log("upload err", err)
         layout.value.showAlert = { error: false, message: err.message }
     })
     onUpdateDone(res => {
-        layout.value.showAlert = { error: false, message: 'Profile updated successfull' }
+        layout.value.showAlert = { error: false, message: 'Profile Picture updated successfull' }
     })
     onUpdateError(err => {
+        console.log("update err", err)
         layout.value.showAlert = { error: true, message: err.message }
     })
 }

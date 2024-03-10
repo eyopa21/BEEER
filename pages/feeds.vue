@@ -110,10 +110,10 @@ const isFeedsEmpty = ref(computed(() => {
                                                     </div>
 
                                                     <div class="flex flex-col ml-3">
-                                                        <div
-                                                            class="font-medium leading-none text-black dark:text-gray-100">
+                                                        <NuxtLink :to="`/account/profile-${i.id}`"
+                                                            class="font-medium hover:underline leading-none text-black dark:text-gray-100">
                                                             {{ i?.profile_detail[0]?.first_name + " " +
-                        i?.profile_detail[0]?.last_name }}</div>
+                        i?.profile_detail[0]?.last_name }}</NuxtLink>
                                                         <p class="text-sm text-gray-500 leading-none mt-1">{{
                                                             i.profile_detail[0].profession }}
                                                         </p>

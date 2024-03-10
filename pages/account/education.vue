@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: ['account'] })
+definePageMeta({ layout: 'account' })
 
 import { EducationsValidationSchema } from '../../zod/ProfileSettingsSchema'
 import { get_educations_query } from '../../queries/users/get.gql'

@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: ['account'] })
+definePageMeta({ layout: 'account' })
 
 import { ProjectsValidationSchema } from '../../zod/ProfileSettingsSchema'
 import { get_projects_query } from '../../queries/users/get.gql'

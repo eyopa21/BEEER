@@ -95,9 +95,8 @@ const ADDorUPDATE = () => {
 
 
 <template>
-    <div
-        class="bg-white dark:bg-gray-900 w-max md:w-full shadow-lg shadow-gray-200  dark:shadow-gray-700 rounded-2xl p-4 mb-6">
-        <div class="flow-root">
+    <div class="bg-white dark:bg-gray-900 w-full shadow-lg shadow-gray-200  dark:shadow-gray-700 rounded-2xl p-4 mb-6">
+        <div class="flow-root ">
 
             <h3 class="dark:text-gray-100 text-xl font-bold">Social accounts</h3>
             <ul class="divide-y divide-gray-200">

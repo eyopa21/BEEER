@@ -29,7 +29,7 @@ const upload = async (req, res) => {
   fs.writeFile(filePath, buffer, async (err) => {
     if (err) {
       console.error("Error writing file:", err);
-      return;
+      return new Error('Uploading error');
     }
     console.log("File written successfully:", filePath);
     try {
@@ -49,7 +49,9 @@ const upload = async (req, res) => {
         url: url,
       });
     } catch (error) {
+      res.sta
       console.error("Error uploading image:", error);
+      return res.status(400).json({ message: "Uploading error" });
     }
   });
 };

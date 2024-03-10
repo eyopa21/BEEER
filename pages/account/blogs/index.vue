@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: ['account'] })
+definePageMeta({ layout: 'account' })
 
 import { get__my_blogs_query } from '../../../queries/blogs/get.gql'
 import { delete_blogs_query } from '../../../queries/blogs/delete.gql'
@@ -92,7 +92,7 @@ onError(err => {
 </script>
 
 <template>
-    <div class="w-full ml-64 px-4 mt-8">
+    <div class="w-full ml-20 md:ml-64 px-4 mt-8">
         <div class="flex justify-between mr-8">
 
             <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">

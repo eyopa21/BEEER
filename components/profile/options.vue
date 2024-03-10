@@ -5,13 +5,13 @@ const router = useRouter();
 const currentUser = useCurrentUser();
 const items = [
     [{
-        label: currentUser.value?.currentUser?.email,
+
         slot: 'account',
         disabled: true
     }],
     [{
         label: 'Profile',
-
+        icon: 'i-heroicons-user-circle',
         click: () => {
             router.push(`/account/profile-${UID.value}`)
         }
@@ -38,7 +38,7 @@ const items = [
 </script>
 
 <template>
-    <UDropdown :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
+    <UDropdown v-if="currentUser.currentUser" :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
         :popper="{ placement: 'bottom-start' }">
         <UAvatar :src="currentUser.currentUser?.profile_detail[0]?.profile_picture || '/placeholder.jpg'" />
 
@@ -49,7 +49,7 @@ const items = [
 
                 </p>
                 <p class="truncate font-medium text-gray-900 dark:text-white">
-                    {{ item.label }}
+                    {{ currentUser.currentUser.email }}
                 </p>
             </div>
         </template>

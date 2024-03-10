@@ -1,5 +1,5 @@
 <script setup>
-definePageMeta({ layout: ['account'] })
+definePageMeta({ layout: 'account' })
 
 import { CertificatesValidationSchema } from '../../zod/ProfileSettingsSchema'
 import { get_certificates_query } from '../../queries/users/get.gql'

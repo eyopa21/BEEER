@@ -40,16 +40,16 @@ const POST = () => {
 
 
 <template>
-    <div class="p-8 mb-64 pb-64">
-        {{ }}
+    <div class="p-4 md:p-8 md:mb-64 pb-64">
+
         <div class="w-full h-screen  bg-white dark:bg-black rounded-lg">
             <div class="p-4 text-zinc-700 text-xl font-medium  leading-loose">
                 Blog post form</div>
-            <div class="pl-16 w-full">
+            <div class="md:pl-16 w-full">
                 <VUEImage @onbase64="(n) => State.image = n" />
             </div>
-            <UForm :schema="BlogValidationSchema" :state="State" class="px-16" @submit="POST">
-                <div class="grid grid-cols-2 p-8  gap-4">
+            <UForm :schema="BlogValidationSchema" :state="State" class="md:px-16" @submit="POST">
+                <div class="grid grid-cols-1 md:grid-cols-2 md:p-8 pb-8  md:gap-4">
                     <div class="flex flex-col pl-4 pt-4 w-full pr-2 space-y-4 ">
                         <UFormGroup name="title" :eager-validation="true">
                             <div class="flex flex-row justify-start items-center gap-14 ">
@@ -99,7 +99,7 @@ const POST = () => {
 
 
                     </div>
-                    <div class="col-span-full mt-4">
+                    <div class="col-span-full mt-4 -mx-2">
                         <UFormGroup name="description" :eager-validation="true">
                             <label class="w-1/3 text-lg p-2 text-blue-500 underline  font-medium  leading-normal">
                                 The Blog
@@ -108,7 +108,7 @@ const POST = () => {
                         </UFormGroup>
                     </div>
                 </div>
-                <div class="flex justify-end gap-4">
+                <div class="flex justify-end gap-4 pb-8">
                     <UButton to="/account/blogs" size="lg" color="primary" variant="outline">Discard</UButton>
                     <UButton :loading="uploadLoading || addLoading" type="submit" size="lg" color="primary">Post Blog
                     </UButton>

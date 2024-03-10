@@ -1,7 +1,3 @@
-
-
-
-
 <script setup>
 import { useImage, useBase64, useObjectUrl } from '@vueuse/core'
 import { shallowRef } from 'vue'

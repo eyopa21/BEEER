@@ -49,8 +49,7 @@ const UPDATE = () => {
 
 </script>
 <template>
-    <div
-        class="bg-white dark:bg-gray-900 w-max md:w-full shadow-lg shadow-gray-200 dark:shadow-gray-700 rounded-2xl p-4 mb-6">
+    <div class="bg-white dark:bg-gray-900 w-full shadow-lg shadow-gray-200 dark:shadow-gray-700 rounded-2xl p-4 mb-6">
         {{ updateValue }}
         <h3 class="mb-4 text-xl font-bold dark:text-gray-100">General information</h3>
         <UForm :schema="GeneralValidationSchema" :state="State" @submit="UPDATE">
