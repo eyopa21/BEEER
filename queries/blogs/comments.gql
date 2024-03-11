@@ -13,3 +13,9 @@ mutation InsertComments(
     id
   }
 }
+
+mutation update_comment_query($id: uuid!, $comment: String!) {
+  update_comments_by_pk(_set: { comment: $comment }, pk_columns: { id: $id }) {
+    id
+  }
+}

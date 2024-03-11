@@ -1,9 +1,15 @@
 <script setup>
+
+import { ref } from 'vue'
+
+
 import { z } from 'zod'
-import { InsertComments } from '../../../queries/blogs/comments.gql'
+import { InsertComments, update_comment_query } from '../../../queries/blogs/comments.gql'
 const UID = useCookie('UID')
 const route = useRoute();
 const layout = useLayout();
+const toBeEdited = ref(null)
+const type = ref(null)
 const {
     formatDate
 } = useHelpers();
@@ -16,16 +22,25 @@ const {
     onError: onAddError,
     loading: addLoading
 } = useMutation(InsertComments)
-const commentInputRef = ref(null)
+const {
+    mutate: UpdateComment,
+    onDone: onUpdateDone,
+    onError: onUpdateError,
+    loading: upddateLoading
+} = useMutation(update_comment_query)
+const commentRef = ref()
+
+
 const items = (type, row) => [
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
         click: () => {
             if (type === 'comment') {
+                commentRef.value?.scrollIntoView({ behavior: "smooth" });
+                toBeEdited.value = row.id
+                CommentState.value.comment = row.comment
 
-                console.log("comment", commentInputRef.value)
-                commentInputRef.value.focus();
             } else if (type === 'reply') {
                 console.log("reply", row)
             }
@@ -43,15 +58,31 @@ const CommentSchema = z.object({
     comment: z.string().min(1, 'Please, write your comment'),
 })
 
-const ADD = () => {
-    AddComment({ blog_id: route.params.id, commentor_id: UID.value, comment: CommentState.value.comment })
-    onAddDone(res => {
-        emit('refetch')
-        CommentState.value = {}
-    })
-    onAddError(err => {
-        layout.value.showAlert = { error: true, message: err.message }
-    })
+const ADDorUPDATE = () => {
+    if (toBeEdited.value) {
+        UpdateComment({ id: toBeEdited.value, comment: CommentState.value.comment })
+        onUpdateDone(res => {
+            layout.value.showAlert = { error: false, message: 'Update successfull' }
+            CommentState.value = {}
+            toBeEdited.value = null;
+            emit('refetch')
+        })
+        onUpdateError(err => {
+            layout.value.showAlert = { error: true, message: err.message }
+            CommentState.value = {}
+            toBeEdited.value = null;
+        })
+    } else {
+        AddComment({ blog_id: route.params.id, commentor_id: UID.value, comment: CommentState.value.comment })
+        onAddDone(res => {
+            emit('refetch')
+            CommentState.value = {}
+        })
+        onAddError(err => {
+            layout.value.showAlert = { error: true, message: err.message }
+        })
+    }
+
 }
 
 const totalComments = computed(() => {
@@ -66,7 +97,7 @@ const totalComments = computed(() => {
 
 <template>
 
-    <section class="bg-white dark:bg-gray-950 py-8 lg:py-16 antialiased">
+    <section ref="commentRef" class="bg-white dark:bg-gray-950 py-8 lg:py-16 antialiased">
         <div class="w-full px-4">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
@@ -75,18 +106,17 @@ const totalComments = computed(() => {
 
 
             </div>
-            <UForm :schema="CommentSchema" :state="CommentState" class="mb-6" @submit="ADD">
+            <UForm :schema="CommentSchema" :state="CommentState" class="mb-6" @submit="ADDorUPDATE">
                 <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg ">
                     <UFormGroup name="comment">
 
                         <label for="comment" class="sr-only">Your comment</label>
-                        <UTextarea v-model="CommentState.comment" id="comment" rows="6" ref="commentInputRef"
-                            tabindex="0"
+                        <UTextarea ref="inputRef" v-model="CommentState.comment" id="comment" rows="6" tabindex="0"
                             class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                             placeholder="Write a comment..."></UTextarea>
                     </UFormGroup>
                 </div>
-                <UButton :loading="addLoading" type="submit"
+                <UButton :loading="addLoading || upddateLoading" type="submit"
                     class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
                     Post comment
                 </UButton>

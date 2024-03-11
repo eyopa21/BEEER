@@ -51,7 +51,7 @@ query get_feeds_query {
     }
   }
 
-  authors {
+  authors(where: { profile_detail: { first_name: { _is_null: false } } }) {
     is_deleted
     is_suspended
     is_verified
@@ -139,7 +139,7 @@ query GetSingleBlogs($id: uuid!) {
         id
       }
     }
-    comments {
+    comments(order_by: { updated_at: desc }) {
       id
       comment
       created_at
@@ -154,7 +154,7 @@ query GetSingleBlogs($id: uuid!) {
           last_name
         }
       }
-      replies {
+      replies(order_by: { updated_at: desc }) {
         id
         reply
         created_at
