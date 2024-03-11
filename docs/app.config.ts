@@ -27,6 +27,6 @@ export default defineAppConfig({
     main: {
       padded: true,
       fluid: true
-
     }
-  })
+  }
+})
