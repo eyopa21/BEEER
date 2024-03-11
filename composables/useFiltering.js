@@ -44,10 +44,8 @@ export function useFiltering() {
 
     router.push({ query: { ...route.query, filter: newFilterQuery } });
 
-    const path = route.path.includes("/page/")
-      ? route.path.split("/page/")[0]
-      : route.path;
-
+    const path = '/search';
+console.log("path", path)
     if (!newFilterQuery) {
       router.push({ path, query: { ...route.query, filter: undefined } });
     } else {

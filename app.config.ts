@@ -72,6 +72,23 @@ export default defineAppConfig({
                     base: 'p-2 py-4',
                 },
             }
+        },
+        tabs: {
+
+            list: {
+
+                marker: {
+                    wrapper: 'absolute top-[4px] left-[4px] duration-200 ease-out focus:outline-none',
+                    base: 'w-full h-full',
+                    background: 'bg-white dark:bg-gray-900',
+                    rounded: 'rounded-md',
+                    shadow: 'shadow-sm',
+                },
+                tab: {
+
+
+                }
+            }
         }
 
     }
