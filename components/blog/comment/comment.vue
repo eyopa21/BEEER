@@ -25,7 +25,7 @@ const items = (type, row) => [
             if (type === 'comment') {
 
                 console.log("comment", commentInputRef.value)
-                commentInputRef.value?.focus();
+                commentInputRef.value.focus();
             } else if (type === 'reply') {
                 console.log("reply", row)
             }

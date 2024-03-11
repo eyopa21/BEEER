@@ -1,11 +1,11 @@
 export default defineAppConfig({
   docus: {
-    title: 'Docus',
-    description: 'The best place to start your documentation.',
-    image: 'https://user-images.githubusercontent.com/904724/185365452-87b7ca7b-6030-4813-a2db-5e65c785bf88.png',
+    title: 'BEEER Ethiopia',
+    description: 'Contribution Guide',
+    image: 'https://res.cloudinary.com/doifglnsi/image/upload/f_webp,q_20/v1698927533/logo_dxqwyh',
     socials: {
       twitter: 'nuxt_js',
-      github: 'nuxt-themes/docus',
+      github: 'eyopa21/BEEER',
       nuxt: {
         label: 'Nuxt',
         icon: 'simple-icons:nuxtdotjs',
@@ -27,12 +27,6 @@ export default defineAppConfig({
     main: {
       padded: true,
       fluid: true
-    },
-    header: {
-      logo: true,
-      showLinkIcon: true,
-      exclude: [],
-      fluid: true
+
     }
-  }
-})
+  })

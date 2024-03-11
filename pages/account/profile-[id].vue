@@ -91,7 +91,7 @@ const noUserFound = ref(computed(() => {
                     <UDivider label="BLOGS" class="block lg:hidden my-4 lg:my-0" />
                     <div
                         class=" bg-transparent dark:bg-black w-full lg:w-4/12 lg:-mx-8 lg:block lg:sticky lg:top-32 h-full">
-                        <div>
+                        <div v-if="profile?.profile_detail[0]?.first_name">
 
 
                             <UAvatar size="3xl" :src="profile?.profile_detail[0]?.profile_picture || '/placeholder.jpg'"
@@ -127,13 +127,27 @@ const noUserFound = ref(computed(() => {
                                 </div>
                             </div>
                         </div>
-                        <UDivider label="Eyoba" class="my-4" />
+                        <div>
+                            <div>
+
+
+                                <UAlert icon="i-heroicons-command-line" color="amber" variant="solid" title="Heads up!"
+                                    description="You can add components to your app using the cli."
+                                    :actions="[{ variant: 'solid', color: 'primary', label: 'Action 1', to:`/account/settings` }]" />
+
+
+
+
+                            </div>
+                        </div>
+                        <UDivider label=" Eyoba" class="my-4" />
                         <div>
 
                             <ProfileDetail :profile="profile" />
 
                         </div>
                     </div>
+
 
                 </div>
             </div>

@@ -106,7 +106,7 @@ query get_educations_query($author_id: uuid!) {
 }
 
 query GetAuthors_query {
-  authors {
+  authors(where: { profile_detail: { first_name: { _is_null: false } } }) {
     is_deleted
     is_suspended
     is_verified

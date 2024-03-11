@@ -40,7 +40,13 @@ const items = [
 <template>
     <UDropdown v-if="currentUser.currentUser" :items="items" :ui="{ item: { disabled: 'cursor-text select-text' } }"
         :popper="{ placement: 'bottom-start' }">
-        <UAvatar :src="currentUser.currentUser?.profile_detail[0]?.profile_picture || '/placeholder.jpg'" />
+        <div>
+            <UAvatar v-if="currentUser.currentUser?.profile_detail[0]?.profile_picture"
+                :src="currentUser.currentUser?.profile_detail[0]?.profile_picture || '/placeholder.jpg'"
+                class="block bg-primary" />
+            <Icon v-else name="i-heroicons-user-circle" class="size-6" />
+        </div>
+
 
         <template #account="{ item }">
             <div class="text-left">
