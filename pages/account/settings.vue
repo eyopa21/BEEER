@@ -1,5 +1,5 @@
 <template>
-    <main class=" ml-20 md:ml-64 w-full mb-32">
+    <main class=" ml-20  w-full mb-32">
         <div @scroll="test()" class=" grid grid-cols-1 md:px-4 pt-6 xl:grid-cols-3 xl:gap-6">
             <div class="col-span-full mb-4 xl:mb-0">
 

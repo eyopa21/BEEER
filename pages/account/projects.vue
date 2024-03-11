@@ -172,7 +172,7 @@ const ADDorUPDATE = () => {
 
 </script>
 <template>
-    <div class="w-full ml-20 md:ml-64 px-4 mt-8">
+    <div class="w-full ml-20  px-4 mt-8">
         <div class="flex justify-between mr-8">
 
             <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
