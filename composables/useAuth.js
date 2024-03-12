@@ -12,7 +12,7 @@ export const useAuth = () => {
       const claims = token ? await JSON.parse(atob(token?.split(".")[1])) : "";
       currentUser.value.id = claims?.uid;
       currentUser.value.company_id = claims?.company_id;
-      const { data, error } = await useLazyAsyncQuery(get_current_user_query, {
+      const { data, error, execute } = await useLazyAsyncQuery(get_current_user_query, {
         id: currentUser.value.id,
       });
       if (error.value) {
@@ -40,6 +40,11 @@ export const useAuth = () => {
 
         return "User logged in";
       }
+      setTimeout(() => {
+         console.log("extec")
+        execute();
+      }, 2000);
+     
     } catch (error) {
       console.log("erororor", error);
       UID.value = null;

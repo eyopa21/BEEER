@@ -19,3 +19,33 @@ mutation update_comment_query($id: uuid!, $comment: String!) {
     id
   }
 }
+
+mutation insert_reply_query(
+  $reply: String!
+  $replier_id: uuid!
+  $comment_id: uuid!
+) {
+  insert_replies_one(
+    object: { replier_id: $replier_id, comment_id: $comment_id, reply: $reply }
+  ) {
+    id
+  }
+}
+
+mutation update_reply_query($id: uuid!, $reply: String!) {
+  update_replies_by_pk(_set: { reply: $reply }, pk_columns: { id: $id }) {
+    id
+  }
+}
+
+mutation delete_comment_query($id: uuid!) {
+  delete_comments_by_pk(id: $id) {
+    id
+  }
+}
+
+mutation delete_reply_query($id: uuid!) {
+  delete_replies_by_pk(id: $id) {
+    id
+  }
+}
