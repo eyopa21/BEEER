@@ -128,12 +128,20 @@ const noUserFound = ref(computed(() => {
                             </div>
                         </div>
                         <div>
-                            <div>
+                            <div v-if="!profile?.profile_detail[0].first_name">
 
 
                                 <UAlert icon="i-heroicons-command-line" color="amber" variant="solid" title="Heads up!"
-                                    description="You can add components to your app using the cli."
-                                    :actions="[{ variant: 'solid', color: 'primary', label: 'Action 1', to:`/account/settings` }]" />
+                                    description="Please, wrap up your profile, In order to be appear on searches"
+                                    :actions="[{ variant: 'solid', color: 'primary', label: 'Proceed', to: `/account/settings` }]"
+                                    :ui="{
+                    wrapper: 'bg-red-500', actions: 'flex justify-end items-center',
+                    color: {
+                        amber: {
+                            solid: 'text-gray-900 dark:text-white bg-amber-300 dark:bg-amber-900 ring-1 ring-gray-200 dark:ring-gray-800',
+                        },
+                    },
+                }" />
 
 
 
